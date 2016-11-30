@@ -1,0 +1,26 @@
+{
+  "name": "jewishplayproject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ACMerriman/JewishPlayProject.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ACMerriman/JewishPlayProject/issues"
+  },
+  "homepage": "https://github.com/ACMerriman/JewishPlayProject#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "pg": "^6.1.0"
+  },
+  "devDependencies": {
+    "http-server": "^0.9.0"
+  }
+}
