@@ -1,54 +1,286 @@
- <head>
-    <link rel="stylesheet" href="https://npmcdn.com/leaflet@1.0.0-rc.3/dist/leaflet.css" /><!-- 1 -->
-    <link title="timeline-styles" rel="stylesheet" href="https://cdn.knightlab.com/libs/timeline3/latest/css/timeline.css">
-    <script src="https://cdn.knightlab.com/libs/timeline3/latest/js/timeline.js"></script>
-    <script src="https://npmcdn.com/leaflet@1.0.0-rc.3/dist/leaflet.js"></script>
-	<script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>	
-    <script>
+<!DOCTYPE HTML>
+<html>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link href="https://fonts.googleapis.com/css?family=Istok+Web" rel="stylesheet">
+<title>Jewish Play Project</title>
+
+<style>
 	
-        var markers = [];
+	body{
+		background-color: #AF589C;
+		font-family: 'Istok Web', sans-serif;
+	}
 	
-        window.onload = function(){
-			$.ajax({
-				url: 'http://localhost:3000/',						
-				success: function(data) {
-                    console.log('success');
-                    console.log(data);
-					
-					setupPage(data);
-                },
-				error: function(data) {
-					console.log('error');
-					console.log(data);
-					
-					// two arguments: the id of the Timeline container (no '#')
-					// and the JSON object or an instance of TL.TimelineConfig created from
-					// a suitable JSON object
-					//window.timeline = new TL.Timeline('timeline-embed', 'marktwain_test.json');
-				}
-			});
+	body img {
+		zoom: 70%;
+		padding-left: 10px;
+	}
+	
+	ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		overflow: hidden;
+		background-color: #72115D;
+		border-radius: 15px;
+		margin-left: 15%;
+		width: 70%;
+	}
+
+	li {
+		float: left;
+	}
+
+	li a {
+		margin: 0;
+		display: block;
+		color: white;
+		text-align: center;
+		padding: 14px 40px;
+		text-decoration: none;
+		font-size: 20px;
+	}
+
+	li a:hover:not(.active) {
+		background-color: #ED2724;
+		background-color: clear;
+	}
+	
+	#mainPage {
+		margin-left: 15%;
+		width: 70%;
+	}
+	
+	#mainContainer {
+		display: inline;
+		margin-top: 10px;
+		background-color: #8E2B78;
+		width: 70%;
+		float: left;
+	}
+	
+	#mainContainer img {
+		zoom: 85%;
+	}
+	
+	h1 {
+		text-align: center;
+		padding: 0px;
+		margin: 5px;
+		font-size: 50px;
+	}
+	
+	h2 {
+		text-align: center;
+		padding: 0px;
+		margin: 0px;
+		font-size: 25px;
+	}
+	
+	#featuredEntryContainer img {
+		margin: 20px;
+		margin-top: 30px;
+		float: right;
+	}
+	
+	#featuredEntryContainer {
+		margin-left: 40px;
+		margin-right: 40px;
+		margin-top: 10px;
+		margin-bottom: 10px;
+		background-color: #AF589C;
+		border-radius: 15px;
+	}
+	
+	#featuredEntryContainer h3 {
+		text-align: left;
+		padding-left: 20px;
+	}
+	
+	#featuredEntryContainer p {
+		padding: 20px;
+	}
+	
+	#featuredEntryTitleBox {
+		margin: 0px;
+		color: white;
+		font-size: 20px;
+		padding-top: 7px;
+		padding-bottom: 7px;
+		text-align: center;
+		background-color: #72115D;
+	}
+	
+	p {
+		font-size: 16px;
+	}
+	
+	#featuredEntryButton {
+		margin: 15px;
+		float: right;
+		background-color: #72115D;
+		border-radius: 5px;
+		border: none;
+		padding: 10px 20px;
+	}
+	
+	#featuredEntryButton a {
+		margin: 0;
+		color: white;
+		text-align: center;
+		padding: 14px 40px;
+		text-decoration: none;
+		font-size: 16px;
+	}
+	
+	#ExemplarCategoryHeader {
+		margin: 0px;
+		padding-top: 7px;
+		padding-bottom: 7px;
+		color: white;
+		font-size: 20px;
+		background-color: #72115D;
+		text-align: center;
+	}
+	
+	#ExemplarCategoryImages {
+		margin-top: 25px;
+		margin-left: 20px;
+		text-align: justify;
+		border-radius: 5px;
+	}
+	
+	#ExemplarCategoryImages > div {
+	width: 200px;
+	display: inline-block;
+	vertical-align: top;
+
+	/* IE fix. */
+	*display: inline;
+	zoom: 1;
+	}
+	
+	#ExemplarCategoryImages:after {
+	content: "";
+	width: 100%;
+	display: inline-block;
+    }
+		
+	#searchBox {
+		margin-top: 10px;
+		width: 29%;
+		padding: 0px;
+		
+		background-color: #8E2B78;
+		float: right;
+	}
+	
+	h3 {
+		text-align: center;
+	}
+	
+	label {
+		margin: 5px;
+		padding: 10px;
+	}
+	
+	#searchButton {
+		margin: 15px;
+		float: right;
+		background-color: #72115D;
+		border-radius: 5px;
+		border: none;
+		padding: 10px 20px;
+		color: white;
+		text-align: center;
+		text-decoration: none;
+		font-size: 16px;
+	}	
+	
+	#lineBreak {
+		text-align: center;
+	}
+	
+	h4 {
+		padding-left: 20px;
+	}
+	
+	label {
+		padding-left: 10px;
+	}
+	
+</style>
+
+<body>
+	<img src="jpp-logo2.png" alt="JPP Logo" style="margin-left:15%;"/>
+	<div id="navigationBar">
+		<ul>
+			<li><a href="http://jewishplayproject.org/player.html">People</a></li>
+			<li><a href="http://jewishplayproject.org/player.html">Toys</a></li>
+			<li><a href="http://jewishplayproject.org/player.html">Company</a></li>
+			<li><a href="http://jewishplayproject.org/timeline.html">Timeline</a></li>
+			<li><a href="http://jewishplayproject.org/">Browse</a></li>
+			<li><a href="http://jewishplayproject.org/news.html">News</a></li>
+			<li><a href="http://jewishplayproject.org/about.html">About</a></li>
+			<li><a href="submitEntry.html">Submit Entry</a></li>
+		</ul>
+	</div>
+	<div id="mainPage">
+		<div id="mainContainer">
+			<h1>Welcome To The Jewish Play Project</h1>
+			<h2>Promoting the understanding and role of Jewish designers, 
+			entrepreneurs, and inventors within the past, present, and future of the play industries.</h2>
 			
-        }
-		
-		function setupPage(data)
-		{
-			window.timeline = new TL.Timeline('timeline-embed', data);
-		}
-		
-		function markerClicked(e)
-		{
-			for(var i = 0; i < markers.length; i++)
-			{
-				if (markers[i] == e.target)
-				{
-					window.timeline.goTo(i);
-				}
-			}
-		}
-    </script>
-    <style>
-    </style>
- </head>
- <body>
-    <div id='timeline-embed' style="width: 100%; height: 600px"></div>
- </body>
+			<div id="featuredEntryContainer">
+				<div id="featuredEntryTitleBox">Featured Entry</div>
+					<img src="cohen.jpg" alt="Featured Entry." />
+					<h3>Lewis I. Cohen </h3>
+					<p>Company: <a href="#LICohenNewYork">L.I. Cohen, New York</a>
+					<br>Toy: <a href="#PlayingCards">Playing Cards</a>
+					<br> Cohen was born in the US and in 1814 was apprenticed to a half-brother's pencil 
+					business in the UK. Afterwards he returned the US to start his own business as the 
+					country's first lead pencil manufacturer and the first stationer to sell steel pens 
+					instead of quills. He added playing cards to his inventory in 1932. In 1935 he patented 
+					and used a single pass, four-color press for playing cards. Those cards became his
+					exclusive line of business and made his company the leading producer of playing cards. </p>
+				<button id="featuredEntryButton"> <a href="http://jewishplayproject.org/timeline.html#1">Explore The Timeline &gt;</a></button>
+				<div style="clear: both;"></div>
+			</div>
+			
+			<div id="ExemplarCategoryHeader">Featured Categories</div>
+			<div id="ExemplarCategoryImages">
+				<div><img src="trollDoll.png" alt="Featured Entry: Troll Doll" /></div>
+				<div><img src="teddyBear.png" alt="Featured Entry: Teddy Bear" /></div>
+				<div><img src="pinball.png" alt="Featured Entry: Triple Action Pinball" /></div>
+				<div><img src="tableTop.png" alt="Featured Entry: Hungry Hungry Hippos" /></div>
+			</div>
+		</div> 
+		<div id="searchBox">
+			<h3>Search The Database</h3>
+			
+			<p><h4>People</h4></p>
+			<p><label>First Name:
+					<input id="sName" type="text" >
+			</label></p>
+			<p><label>Last Name:
+					<input id="sDescription" type="text" >
+			</label></p>
+			
+			<p><p><p><div id="lineBreak"> ___________________________</div><p><p>
+			
+			<p><h4>Toys</h4></p>
+			<p><label>Type:
+					<input id="sType" type="text" >
+			</label></p>
+			
+			<p><p><p><div id="lineBreak"> ___________________________</div><p><p>
+			
+			<p><h4>Company</h4></p>
+			<p><label>Name:
+					<input id="sDate" type="text" >
+			</label></p>
+			<button id="searchButton">Search &gt;</button>
+		</div>
+	</div>
+</body>
+</html>
