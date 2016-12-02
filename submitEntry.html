@@ -3,124 +3,8 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link href="https://fonts.googleapis.com/css?family=Istok+Web" rel="stylesheet">
 <title>Jewish Play Project</title>
-
-<style>
-	
-	body{
-		background-color: #e7f6ff;
-		color: #72115d;
-		font-family: 'Istok Web', sans-serif;
-	}
-	
-	body img {
-		zoom: 70%;
-		padding-left: 10px;
-	}
-	
-	ul.topnav {
-		list-style-type: none;
-		margin: 0;
-		padding: 0;
-		overflow: hidden;
-		background-color: #228dff;
-		margin-left: 15%;
-		width: 70%;
-	}
-
-	ul.topnav li {float: left;}
-
-	ul.topnav li a {
-		margin: 0;
-		display: block;
-		color: #e7f6ff;
-		text-align: center;
-		padding: 14px 30px;
-		text-decoration: none;
-		font-size: 18px;
-	}
-
-	ul.topnav li a:hover:not(.active) {
-		background-color: #97cbdc;
-		background-color: clear;
-	}
-
-	ul.topnav li.right {float: right;}
-
-	@media screen and (max-width: 600px){
-		ul.topnav li.right,
-		ul.topnav li {float: none;}
-	}
-	
-	#mainContainer {
-		display: inline;
-		margin-top: 10px;
-		background-color: #97cbdc;
-		width: 70%;
-		margin-left: 15%;
-		float: left;
-	}
-	
-	h1 {
-		padding: 0px;
-		margin: 15px;
-		font-size: 30px;
-	}
-	
-	h2 { 
-		padding: 0px 40px 0px 60px;
-		font-size: 20px;
-	}
-	
-	#required {
-		padding: 0px 40px 0px 60px;
-		font-size: 12px;
-	}
-	
-	p {
-		font-size: 16px;
-	}
-	
-	label {
-		padding-left: 30px;
-	}
-	
-	input { 
-		margin-left: 20px;
-		width: 25%;
-		padding: 7px;
-		box-shadow: 1px 1px 10px rgba(0,0,0,.25);
-		border-radius: 5px;
-		border: 2px solid #dde8f0;
-	}
-	
-	input[type="checkbox" i] {
-		box-shadow: none;
-		margin-left: 0px;
-		padding: 0px;
-		width: 10%;
-	}
-	
-	input#Bio, input#Description {
-		padding: 50px;
-	}
-	
-	.required, #required  {
-		color: red;
-	}
-	
-	#submitButton {
-		margin: 15px 50px;
-		float: right;
-		background-color: #228dff;
-		border-radius: 5px;
-		border: none;
-		padding: 10px 40px;
-		color: #e7f6ff;
-		text-align: center;
-		font-size: 16px;
-	}
-	
-</style>
+<link rel="stylesheet" href="submitEntry.css">
+<script src="submitEntry.js"></script>
 
 <body>
 	<a href="https://people.rit.edu/~jmi6217/JewishPlayProject/"> <img src="jpp-logo2.png" alt="JPP Logo" style="margin-left:15%;" /></a>
@@ -139,7 +23,7 @@
 		<h1>Submit Entry</h1>
 		<div id="required">* Required Fields</div>
 		<label>Type: 
-			<select id="typeSelect">
+			<select id="typeSelect" onchange="change(this)">
 				<option value="people">People</option>
 				<option value="toys">Toys</option>
 				<option value="companies">Companies</option>
@@ -148,7 +32,7 @@
 		
 		<hr>
 		
-		<div id="people">
+		<div id="peopleD">
 			<h2> People </h2>
 			<p><label>Name: <span class="required">*</span>
 				<input id="FirstName" type="textbox" placeholder="First"></input>
@@ -183,7 +67,7 @@
 				</label>
 		</div>
 		
-		<div id="toys">
+		<div id="toysD">
 			<h2> Toys </h2>
 			<p><label>Name: <span class="required">*</span>
 				<input id="Name" type="textbox"></input>
@@ -197,7 +81,6 @@
 			<p><label>People:
 				<input id="People" type="textbox"></input>
 				</label>
-			
 			<p><label>Picture:
 				<input id="Picture" type="textbox"></input>
 				</label>
@@ -215,7 +98,7 @@
 				</label>
 		</div>
 		
-		<div id="companies">
+		<div id="companiesD">
 			<h2> Companies </h2>
 			<p><label>Name: <span class="required">*</span>
 				<input id="Name" type="textbox"></input>
