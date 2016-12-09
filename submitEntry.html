@@ -4,10 +4,11 @@
 <link href="https://fonts.googleapis.com/css?family=Istok+Web" rel="stylesheet">
 <title>Jewish Play Project</title>
 <link rel="stylesheet" href="submitEntry.css">
+	<script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>	
 <script src="submitEntry.js"></script>
 
 <body>
-	<a href="https://people.rit.edu/~jmi6217/JewishPlayProject/"> <img src="jpp-logo2.png" alt="JPP Logo" style="margin-left:15%;" /></a>
+	<a href="./"> <img src="jpp-logo2.png" alt="JPP Logo" style="margin-left:15%;" /></a>
 	<ul class="topnav">
 		<li><a href="http://jewishplayproject.org/player.html">People</a></li>
 		<li><a href="http://jewishplayproject.org/player.html">Toys</a></li>
@@ -35,113 +36,113 @@
 		<div id="peopleD">
 			<h2> People </h2>
 			<p><label>Name: <span class="required">*</span>
-				<input id="FirstName" type="textbox" placeholder="First"></input>
-				<input id="LastName" type="textbox" placeholder="Last"></input>
+				<input id="pFirstName" type="textbox" placeholder="First"></input>
+				<input id="pLastName" type="textbox" placeholder="Last"></input>
 				<label>
 			<p><label>Middle Name:
-				<input id="MiddleName" type="textbox"></input>
+				<input id="pMiddleName" type="textbox"></input>
 				</label>
 			<p><label>Birth Year:
-				<input id="BirthYear" type="textbox"></input>
+				<input id="pBirthYear" type="textbox"></input>
 				</label>
 			<p><label>Death Year:
-				<input id="DeathYear" type="textbox"></input>
+				<input id="pDeathYear" type="textbox"></input>
 				</label>
 			<p><label>Companies:
-				<input id="Companies" type="textbox"></input>
+				<input id="pCompanies" type="textbox"></input>
 				</label>
 			<p><label>Picture:
-				<input id="Picture" type="textbox"></input>
+				<input id="pPicture" type="textbox"></input>
 				</label>
 			<p><label>Sources:
-				<input id="Sources" type="textbox"></input>
+				<input id="pSources" type="textbox"></input>
 				</label>
 			<p><label>Source Titles:
-				<input id="SourceTitles" type="textbox"></input>
+                <div id='pSourceTitles'><div id='pSourceTitlesContainer_0' row=0><input type='text' class='pSourceTitles' id='pSourceTitles_0' row=0></input><br /></div></div><button id='pAddRowAddSourceTitle' class="addRowButton">+</button>
 				</label>
 			<p><label>Bio:
-				<input id="Bio" type="textbox"></input>
+				<input id="pBio" type="textbox"></input>
 				</label>
 			<p><label>Live:
-				<input id="Live" type="checkbox"></input>
+				<input id="pLive" type="checkbox"></input>
 				</label>
 		</div>
 		
 		<div id="toysD">
 			<h2> Toys </h2>
 			<p><label>Name: <span class="required">*</span>
-				<input id="Name" type="textbox"></input>
+				<input id="tName" type="textbox"></input>
 				</label>
 			<p><label>Year:
-				<input id="Year" type="textbox"></input>
+				<input id="tYear" type="textbox"></input>
 				</label>
 			<p><label>Companies:
-				<input id="Companies" type="textbox"></input>
+				<input id="tCompanies" type="textbox"></input>
 				</label>
 			<p><label>People:
-				<input id="People" type="textbox"></input>
+				<input id="tPeople" type="textbox"></input>
 				</label>
 			<p><label>Picture:
-				<input id="Picture" type="textbox"></input>
+				<input id="tPicture" type="textbox"></input>
 				</label>
 			<p><label>Sources:
-				<input id="Sources" type="textbox"></input>
+				<input id="tSources" type="textbox"></input>
 				</label>
 			<p><label>Source Titles:
-				<input id="SourceTitles" type="textbox"></input>
+				<input id="tSourceTitles" type="textbox"></input>
 				</label>
 			<p><label>Description:
-				<input id="Description" type="textbox"></input>
+				<input id="tDescription" type="textbox"></input>
 				</label>
 			<p><label>Live:
-				<input id="Live" type="checkbox"></input>
+				<input id="tLive" type="checkbox"></input>
 				</label>
 		</div>
 		
 		<div id="companiesD">
 			<h2> Companies </h2>
 			<p><label>Name: <span class="required">*</span>
-				<input id="Name" type="textbox"></input>
+				<input id="cName" type="textbox"></input>
 				</label>
 			<p><label>Founding Year:
-				<input id="FoundingYear" type="textbox"></input>
+				<input id="cFoundingYear" type="textbox"></input>
 				</label>
 			<p><label>Closing Year:
-				<input id="ClosingYear" type="textbox"></input>
+				<input id="cClosingYear" type="textbox"></input>
 				</label>
 			<p><label>Founding Location:
-				<input id="FoundingLocation" type="textbox"></input>
+				<input id="cFoundingLocation" type="textbox"></input>
 				</label>
 			<p><label>People:
-				<input id="People" type="textbox"></input>
+				<input id="cPeople" type="textbox"></input>
 				</label>
 			<p><label>Toys:
-				<input id="toys" type="textbox"></input>
+				<input id="cToys" type="textbox"></input>
 				</label>
 			
 			<p><label>Website:
-				<input id="Website" type="textbox"></input>
+				<input id="cWebsite" type="textbox"></input>
 				</label>
 			<p><label>Logo:
-				<input id="Logo" type="textbox"></input>
+				<input id="cLogo" type="textbox"></input>
 				</label>
 			<p><label>Current Owner:
-				<input id="CurrentOwner" type="textbox"></input>
+				<input id="cCurrentOwner" type="textbox"></input>
 				</label>
 			<p><label>Sources:
-				<input id="Sources" type="textbox"></input>
+				<input id="cSources" type="textbox"></input>
 				</label>
 			<p><label>Source Titles:
-				<input id="SourceTitles" type="textbox"></input>
+				<input id="cSourceTitles" type="textbox"></input>
 				</label>
 			<p><label>Description:
-				<input id="Description" type="textbox"></input>
+				<input id="cDescription" type="textbox"></input>
 				</label>
 			<p><label>Live:
-				<input id="Live" type="checkbox"></input>
+				<input id="cLive" type="checkbox"></input>
 				</label>
 		</div>
-		<button id="submitButton">Submit</button>
+		<button id="submitButton" onclick="submit()">Submit</button>
 	</div>
 	
 </body>

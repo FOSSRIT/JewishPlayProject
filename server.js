@@ -5,6 +5,7 @@ var app = express();
 
 app.use(parser.urlencoded({extended:true}));
 
+//var conString = "postgres://postgres:admin@localhost:5432/JewishPlayProject";
 var conString = "postgres://postgres:admin@localhost:5432/JewishPlayProject";
 var client = new pg.Client(conString);
 client.connect();
@@ -332,11 +333,12 @@ app.get('/person', function(req, res){
     var queries = JSON.parse(req.query.data);
 	console.log(queries);
     
-    
     if(queries.firstName && queries.lastName)
     {    
         queries.firstName = queries.firstName.replace(/'/g, "''");
+        queries.firstName = queries.name.replace(/[\(\)]/g, "\\$&");
         queries.lastName = queries.lastName.replace(/'/g, "''");
+        queries.lastName = queries.name.replace(/[\(\)]/g, "\\$&");
         var query = "SELECT * FROM \"People\" WHERE ";
         query += "\"People\".\"FirstName\" ~* '" + queries.firstName + "' AND ";
         query += "\"People\".\"LastName\" ~* '" + queries.lastName + "' AND ";
@@ -531,10 +533,10 @@ app.get('/toy', function(req, res){
     var queries = JSON.parse(req.query.data);
 	console.log(queries);
     
-    
     if(queries.name)
     {    
         queries.name = queries.name.replace(/'/g, "''");
+        queries.name = queries.name.replace(/[\(\)]/g, "\\$&");
         var query = "SELECT * FROM \"Toys\" WHERE ";
         query += "\"Toys\".\"Name\" ~* '" + queries.name + "' AND ";
         query += "\"Toys\".\"Live\" = True";
@@ -744,7 +746,8 @@ app.get('/company', function(req, res){
     
     if(queries.name)
     {    
-        queries.name = queries.name.replace(/'/g, "''");    
+        queries.name = queries.name.replace(/'/g, "''");
+        queries.name = queries.name.replace(/[\(\)]/g, "\\$&");
         var query = "SELECT * FROM \"Companies\" WHERE ";
         query += "\"Companies\".\"Name\" ~* '" + queries.name + "' AND ";
         query += "\"Companies\".\"Live\" = True";

@@ -90,14 +90,14 @@ select, input {
 	border: 2px solid #dde8f0;
 }
 
-input#Live {
+input[type="checkbox"] {
 	box-shadow: none;
 	margin-left: 0px;
 	padding: 0px;
 	width: 10%;
 }
 
-input#Bio, input#Description {
+input#pBio, input#cDescription, input#tDescription {
 	padding: 50px;
 }
 
@@ -121,4 +121,8 @@ input#Bio, input#Description {
 #toysD, #companiesD
 {
 	display: none;
+}
+
+.addRowButton{
+    float: right;
 }
