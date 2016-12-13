@@ -43,9 +43,16 @@ function updateJSON()
 			rEvent.start_date = {};
 			rEvent.start_date.year = row.BirthYear;
 			if(row.DeathYear)
-			{
-				rEvent.end_date = {};
-				rEvent.end_date.year = row.DeathYear;
+			{					
+                rEvent.end_date = {};
+                if(row.DeathYear == "Present")
+                {
+                    rEvent.end_date.year = new Date().getFullYear();
+                }
+                else
+                {
+                    rEvent.end_date.year = row.DeathYear;
+                }
 			}
 			var name = row.FirstName;
 			name += row.MiddleName ? " " + row.MiddleName : "";
@@ -541,12 +548,12 @@ app.get('/person', function(req, res){
     if(queries.firstName && queries.lastName)
     {    
         queries.firstName = queries.firstName.replace(/'/g, "''");
-        queries.firstName = queries.name.replace(/[\(\)]/g, "\\$&");
+        queries.firstName = queries.firstName.replace(/[\(\)]/g, "\\$&");
         queries.lastName = queries.lastName.replace(/'/g, "''");
-        queries.lastName = queries.name.replace(/[\(\)]/g, "\\$&");
+        queries.lastName = queries.lastName.replace(/[\(\)]/g, "\\$&");
         var query = "SELECT * FROM \"People\" WHERE ";
-        query += "\"People\".\"FirstName\" ~* '" + queries.firstName + "' AND ";
-        query += "\"People\".\"LastName\" ~* '" + queries.lastName + "' AND ";
+        query += "lower(\"People\".\"FirstName\") = lower('" + queries.firstName + "') AND ";
+        query += "lower(\"People\".\"LastName\") = lower('" + queries.lastName + "') AND ";
         query += "\"People\".\"Live\" = True";
         
         results = [];
@@ -572,6 +579,72 @@ app.get('/person', function(req, res){
                 res.status(500).send("Too Many Results");
             }
         });
+    }
+    else if(queries.name)
+    {
+        queries.name = queries.name.replace(/'/g, "''");
+        queries.name = queries.name.replace(/[\(\)]/g, "\\$&");
+        var nameArray = queries.name.split(" ");
+        function guessName(array, left, right)
+        {
+            if(left >= array.length)
+            {
+                res.status(500).send("No Results");
+                return;
+            }
+            var firstName = "";
+            for(var i = 0; i < left; i++)
+            {
+                firstName += array[i] + " ";
+            }
+            firstName = firstName.trim();
+            
+            var lastName = "";
+            for(var i = right; i < array.length; i++)
+            {
+                lastName += array[i] + " ";
+            }
+            lastName = lastName.trim();
+            
+            console.log("guessing FN:" + firstName + " LN:" + lastName);
+            
+             var query = "SELECT * FROM \"People\" WHERE ";
+            query += "lower(\"People\".\"FirstName\") = lower('" + firstName + "') AND ";
+            query += "lower(\"People\".\"LastName\") = lower('" + lastName + "') AND ";
+            query += "\"People\".\"Live\" = True";
+            
+            results = [];
+            var pquery = client.query(query);
+            
+            pquery.on('row', function(row) 
+            {
+                results.push(row);
+            });	
+            
+            pquery.on('end', function(){
+                if(results.length == 0)
+                {
+                    if(right <= left)
+                    {
+                        guessName(array, left+1, array.length - 1);
+                    }
+                    else
+                    {
+                        guessName(array, left, right - 1);
+                    }
+                }
+                else if(results.length == 1)
+                {
+                    res.json(results[0]);
+                }
+                else
+                {
+                    console.log(results);
+                    res.status(500).send("Too Many Results");
+                }
+            });
+        }
+        guessName(nameArray, 1, nameArray.length - 1);
     }
     else
     {
@@ -743,7 +816,7 @@ app.get('/toy', function(req, res){
         queries.name = queries.name.replace(/'/g, "''");
         queries.name = queries.name.replace(/[\(\)]/g, "\\$&");
         var query = "SELECT * FROM \"Toys\" WHERE ";
-        query += "\"Toys\".\"Name\" ~* '" + queries.name + "' AND ";
+        query += "lower(\"Toys\".\"Name\") = lower('" + queries.name + "') AND ";
         query += "\"Toys\".\"Live\" = True";
         
         console.log(query);
@@ -954,7 +1027,7 @@ app.get('/company', function(req, res){
         queries.name = queries.name.replace(/'/g, "''");
         queries.name = queries.name.replace(/[\(\)]/g, "\\$&");
         var query = "SELECT * FROM \"Companies\" WHERE ";
-        query += "\"Companies\".\"Name\" ~* '" + queries.name + "' AND ";
+        query += "lower(\"Companies\".\"Name\") = lower('" + queries.name + "') AND ";
         query += "\"Companies\".\"Live\" = True";
         
         results = [];
