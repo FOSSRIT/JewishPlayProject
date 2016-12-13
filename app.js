@@ -185,7 +185,7 @@ for(var i = 0; i < g_toys.length; i++)
 {
 	var toy = g_toys[i];
 	query = client.query(
-		"INSERT INTO public.\"Toys\"(\"Name\", \"Companies\", \"People\", \"Year\", \"Description\", \"Sources\", \"SourceTitles\", \"Live\", \"Image\") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)", 
+		"INSERT INTO public.\"Toys\"(\"Name\", \"Companies\", \"People\", \"Year\", \"Description\", \"Sources\", \"SourceTitles\", \"Live\", \"Picture\") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)", 
 		[toy.name, toy.companies, toy.people, toy.year, toy.description, toy.sources, toy.sourceTitles, toy.live, toy.image],
 		function(err, result)
 		{

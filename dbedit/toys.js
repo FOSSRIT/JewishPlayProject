@@ -667,6 +667,7 @@ function setupEvents()
 
 function setupToyTypesDropdown(toyTypes)
 {
+	console.log(toyTypes);
     var dropdown = "<select id='{DROPDOWNID}'>";
     dropdown += "<option value=''>Select Type</option>";
     for(var i = 0; i < toyTypes.length; i++)

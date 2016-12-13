@@ -30,6 +30,7 @@ function updateJSON()
 {
 	json = {events: []};
 	people = [];
+	var index = 0;
 	var pquery = client.query("SELECT * FROM \"People\"");
 	//fired after last row is emitted
 
@@ -51,86 +52,251 @@ function updateJSON()
 			name += " " + row.LastName;
 			rEvent.text = {};
 			rEvent.text.headline = name;
+			rEvent.text.text = "";
+			if(row.Companies && row.Companies.length > 0)
+			{
+				rEvent.Companies = row.Companies;
+				if(row.Companies.length == 1)
+				{
+					rEvent.text.text += "Company: "
+				}
+				else
+				{
+					rEvent.text.text += "Companies: "
+				}
+				for(var i = 0; i < row.Companies.length; i++)
+				{
+					rEvent.text.text += "{C" + i + "}<br />";
+				}
+			}
+			if(row.Toys && row.Toys.length > 0)
+			{
+				rEvent.Toys = row.Toys;
+				if(row.Toys.length == 1)
+				{
+					rEvent.text.text += "Toy: "
+				}
+				else
+				{
+					rEvent.text.text += "Toys: "
+				}
+				for(var i = 0; i < row.Toys.length; i++)
+				{
+					rEvent.text.text += "{T" + i + "}<br />";
+				}
+			}
 			if(row.Bio)
 			{
-				rEvent.text.text = row.Bio;
+				rEvent.text.text += row.Bio;
 			}
 			if(row.Picture)
 			{
 				rEvent.media = {};
 				rEvent.media.url = row.Picture;
 			}
-			//rEvent.unique_id = row.Index.toString();
+			rEvent.unique_id = "P" + index++;
+			//rEvent.unique_id = name.replace(/ /g, "_");
 			rEvent.group = "People";
 			json.events.push(rEvent);
 		}
 	});
 	
-    companies = [];
-	var cquery = client.query("SELECT * FROM \"Companies\"");
-	//fired after last row is emitted
+	pquery.on('end', function(){
+		var firstCompany = index;
+		companies = [];
+		var cquery = client.query("SELECT * FROM \"Companies\"");
+		//fired after last row is emitted
 
-	cquery.on('row', function(row) 
-	{
-		companies.push(row);
-		if(row.Live)
+		cquery.on('row', function(row) 
 		{
-			var rEvent = {};
-			rEvent.start_date = {};
-			rEvent.start_date.year = row.FoundingYear;
-			if(row.ClosingYear)
+			companies.push(row);
+			if(row.Live)
 			{
-				rEvent.end_date = {};
-				rEvent.end_date.year = row.ClosingYear;
+				var rEvent = {};
+				rEvent.start_date = {};
+				rEvent.start_date.year = row.FoundingYear;
+				if(row.ClosingYear)
+				{
+					rEvent.end_date = {};
+					if(row.ClosingYear == "Present")
+					{
+						rEvent.end_date.year = new Date().getFullYear();
+					}
+					else
+					{
+						rEvent.end_date.year = row.ClosingYear;
+					}
+				}
+				rEvent.text = {};
+				rEvent.text.headline = row.Name;
+				rEvent.text.text = "";
+				if(row.People && row.People.length > 0)
+				{
+					rEvent.People = row.People;
+					rEvent.text.text += "People: "
+					for(var i = 0; i < row.People.length; i++)
+					{
+						rEvent.text.text += "{P" + i + "}<br />";
+					}
+				}
+				rEvent.text.text += "Founding Location: " + row.FoundingLocation + "<br />";
+				if(row.Toys && row.Toys.length > 0)
+				{
+					rEvent.Toys = row.Toys;
+					if(row.Toys.length == 1)
+					{
+						rEvent.text.text += "Toy: "
+					}
+					else
+					{
+						rEvent.text.text += "Toys: "
+					}
+					for(var i = 0; i < row.Toys.length; i++)
+					{
+						rEvent.text.text += "{T" + i + "}<br />";
+					}
+				}
+				if(row.Description)
+				{
+					rEvent.text.text += row.Description;
+				}
+				if(row.Logo)
+				{
+					rEvent.media = {};
+					rEvent.media.url = row.Logo;
+				}
+				rEvent.unique_id = "C" + index++;
+				//rEvent.unique_id = row.Name.replace(/ /g, "_");
+				rEvent.group = "Companies";
+				json.events.push(rEvent);
 			}
-			rEvent.text = {};
-			rEvent.text.headline = row.Name;
-			if(row.Description)
-			{
-				rEvent.text.text = row.Description;
-			}
-			if(row.Logo)
-			{
-				rEvent.media = {};
-				rEvent.media.url = row.Logo;
-			}
-			//rEvent.unique_id = row.Index.toString();
-			rEvent.group = "Companies";
-			json.events.push(rEvent);
-		}
-	});
-	
-    toys = [];
-	var tquery = client.query("SELECT * FROM \"Toys\"");
-	//fired after last row is emitted
+		});
+		
+		cquery.on('end', function(){
+			var firstToy = index;
+			toys = [];
+			var tquery = client.query("SELECT * FROM \"Toys\"");
+			//fired after last row is emitted
 
-	tquery.on('row', function(row) 
-	{
-		toys.push(row);
-		if(row.Live)
-		{
-			var rEvent = {};
-			rEvent.start_date = {};
-			rEvent.start_date.year = row.Year;
-			rEvent.text = {};
-			rEvent.text.headline = row.Name;
-			if(row.Description)
+			tquery.on('row', function(row) 
 			{
-				rEvent.text.text = row.Description;
-			}
-			if(row.Image)
-			{
-				rEvent.media = {};
-				rEvent.media.url = row.Image;
-			}
-			//rEvent.unique_id = row.Index.toString();
-			rEvent.group = "Toys";
-			json.events.push(rEvent);
-		}
-	});
+				toys.push(row);
+				if(row.Live)
+				{
+					var rEvent = {};
+					rEvent.start_date = {};
+					rEvent.start_date.year = row.Year;
+					rEvent.text = {};
+					rEvent.text.headline = row.Name;
+					rEvent.text.text = "";
+					if(row.People && row.People.length > 0)
+					{
+						rEvent.People = row.People;
+						rEvent.text.text += "People: "
+						for(var i = 0; i < row.People.length; i++)
+						{
+							rEvent.text.text += "{P" + i + "}<br />";
+						}
+					}
+					if(row.Toys && row.Toys.length > 0)
+					{
+						rEvent.Toys = row.Toys;
+						if(row.Toys.length == 1)
+						{
+							rEvent.text.text += "Toy: "
+						}
+						else
+						{
+							rEvent.text.text += "Toys: "
+						}
+						for(var i = 0; i < row.Toys.length; i++)
+						{
+							rEvent.text.text += "{T" + i + "}<br />";
+						}
+					}
+					if(row.Description)
+					{
+						rEvent.text.text += row.Description;
+					}
+					if(row.Image)
+					{
+						rEvent.media = {};
+						rEvent.media.url = row.Image;
+					}
+					rEvent.unique_id = "T" + index++;
+					///rEvent.unique_id = row.Name.replace(/ /g, "_");
+					rEvent.group = "Toys";
+					json.events.push(rEvent);
+				}
+			});
 
-	tquery.on('end', function() {
-		//console.log(json);
+			tquery.on('end', function() {
+				for(var i = 0; i < json.events.length; i++)
+				{
+					var event = json.events[i];
+					if (event.People)
+					{
+						for(var j = 0; j < event.People.length; j++)
+						{
+							for(var k = 0; k <= firstCompany; k++)
+							{
+								if(k == firstCompany)
+								{
+									event.text.text = event.text.text.replace("{P" + j + "}", event.People[j]);
+									break;
+								}
+								if(event.People[j] == json.events[k].text.headline)
+								{
+									//console.log("{C" + j + "}");
+									///event.text.text = event.text.text.replace("{P" + j + "}", "<a href='#" + json.events[k].unique_id + "'>" + event.People[j] + "</a>");
+									//break;
+								}
+							}
+						}
+					}
+					if (event.Companies)
+					{
+						for(var j = 0; j < event.Companies.length; j++)
+						{
+							for(var k = firstCompany; k <= firstToy; k++)
+							{
+								if(k == firstToy)
+								{
+									event.text.text = event.text.text.replace("{C" + j + "}", event.Companies[j]);
+									break;
+								}
+								if(event.Companies[j] == json.events[k].text.headline)
+								{
+									//console.log("{C" + j + "}");
+									///event.text.text = event.text.text.replace("{C" + j + "}", "<a href='#" + json.events[k].unique_id + "'>" + event.Companies[j] + "</a>");
+									//break;
+								}
+							}
+						}
+					}
+					if(event.Toys)
+					{
+						for(var j = 0; j < event.Toys.length; j++)
+						{
+							for(var k = firstToy; k <= index; k++)
+							{
+								if(k == index)
+								{
+									event.text.text = event.text.text.replace("{T" + j + "}", event.Toys[j]);
+									break;
+								}
+								if(event.Toys[j] == json.events[k].text.headline)
+								{
+									//console.log("{T" + j + "}");
+									///event.text.text = event.text.text.replace("{T" + j + "}", "<a href='#" + json.events[k].unique_id + "'>" + event.Toys[j] + "</a>");
+									//break;
+								}
+							}
+						}
+					}
+				}
+			});
+		});
 	});
     
     toytypes = [];
