@@ -89,6 +89,19 @@ function updateJSON()
 			{
 				rEvent.text.text += row.Bio;
 			}
+            if(row.Sources && row.Sources.length > 0)
+            {
+                rEvent.text.text += "<br/><br/>Sources:<br/>";
+                for(var i = 0; i < row.Sources.length; i++)
+                {
+                    var title = row.Sources[i];
+                    if(row.SourceTitles && row.SourceTitles[i])
+                    {
+                        title = row.SourceTitles[i];
+                    }
+                    rEvent.text.text += "<a href='" + row.Sources[i] + "' target='_blank'>" + title  + "</a><br/>";
+                }
+            }
 			if(row.Picture)
 			{
 				rEvent.media = {};
@@ -160,6 +173,19 @@ function updateJSON()
 				{
 					rEvent.text.text += row.Description;
 				}
+                if(row.Sources && row.Sources.length > 0)
+                {
+                    rEvent.text.text += "<br/><br/>Sources:<br/>";
+                    for(var i = 0; i < row.Sources.length; i++)
+                    {
+                        var title = row.Sources[i];
+                        if(row.SourceTitles && row.SourceTitles[i])
+                        {
+                            title = row.SourceTitles[i];
+                        }
+                        rEvent.text.text += "<a href='" + row.Sources[i] + "' target='_blank'>" + title  + "</a><br/>";
+                    }
+                }
 				if(row.Logo)
 				{
 					rEvent.media = {};
@@ -218,6 +244,19 @@ function updateJSON()
 					{
 						rEvent.text.text += row.Description;
 					}
+                    if(row.Sources && row.Sources.length > 0)
+                    {
+                        rEvent.text.text += "<br/><br/>Sources:<br/>";
+                        for(var i = 0; i < row.Sources.length; i++)
+                        {
+                            var title = row.Sources[i];
+                            if(row.SourceTitles && row.SourceTitles[i])
+                            {
+                                title = row.SourceTitles[i];
+                            }
+                            rEvent.text.text += "<a href='" + row.Sources[i] + "' target='_blank'>" + title  + "</a><br/>";
+                        }
+                    }
 					if(row.Image)
 					{
 						rEvent.media = {};
