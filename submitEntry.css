@@ -57,6 +57,12 @@ ul.topnav li.right {float: right;}
 	float: left;
 }
 
+hr {
+	height: 10px;
+	border: 0;
+	box-shadow: 0 5px 5px -5px #ffffff inset;
+}
+
 h1 {
 	padding: 0px;
 	margin: 15px;
