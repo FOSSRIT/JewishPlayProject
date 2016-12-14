@@ -21,6 +21,9 @@
 					console.log('error');
 					console.log(data);
 					
+					document.getElementById("timeline-embed").style.display = "none";
+					document.getElementById("timeline-temp").style.display = "block";
+					
 					// two arguments: the id of the Timeline container (no '#')
 					// and the JSON object or an instance of TL.TimelineConfig created from
 					// a suitable JSON object
@@ -52,4 +55,5 @@
  </head>
  <body>
     <div id='timeline-embed' style="width: 100%; height: 600px"></div>
+	<iframe id='timeline-temp' style='display:none' src='https://cdn.knightlab.com/libs/timeline3/latest/embed/index.html?source=1-oQByBfIlL0PwvcxEEpSzQNDwXY9qPLQM7PKmWBK9aM&font=Default&lang=en&initial_zoom=2&height=650' width='100%' height='650' frameborder='0'></iframe>
  </body>
