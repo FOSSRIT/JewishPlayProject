@@ -14,7 +14,8 @@
 				url: 'http://localhost:3000/',						
 				success: function(data) {
                     console.log('success');
-                    console.log(data);					
+                    console.log(data);
+					
 					setupPage(data);
                 },
 				error: function(data) {
@@ -65,7 +66,7 @@
 	</ul>
     
     <div class="timeline">
-        <div id='timeline-embed' width='75%' height='650px';></div>
+        <div id='timeline-embed'></div>
         <iframe id='timeline-temp' style='display:none' src='https://cdn.knightlab.com/libs/timeline3/latest/embed/index.html?source=1-oQByBfIlL0PwvcxEEpSzQNDwXY9qPLQM7PKmWBK9aM&font=Default&lang=en&initial_zoom=2&height=650' frameborder='0' ></iframe>
     </div>
  </body>
