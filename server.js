@@ -390,6 +390,57 @@ app.get('/people', function(req, res){
 	res.json(people);
 });
 
+//get all live people rows
+app.get('/browsepeople', function(req, res){
+	var data = [];
+	for(var i = 0; i < people.length; i++)
+	{
+		if(people[i].Live)
+		{
+			var person = {};
+			var name = people[i].FirstName;
+			name += people[i].MiddleName ? " " + people[i].MiddleName : "";
+			name += " " + people[i].LastName;
+			person.name = name;
+			if(people[i].Picture)
+			{
+				person.picture = people[i].Picture;
+			}
+			else
+			{
+				person.picture = "";
+			}
+			var year = people[i].BirthYear;
+			if(people[i].DeathYear)
+			{
+				year += " - " + people[i].DeathYear;
+			}
+			else
+			{
+				year += " - Present";
+			}
+			person.year = year;
+			if(people[i].Bio)
+			{
+				if(people[i].Bio.length > 252)
+				{
+					person.description = people[i].Bio.substr(0, 250) + "...";
+				}
+				else
+				{
+					person.description = people[i].Bio;
+				}
+			}
+			else
+			{
+				person.description = "";
+			}
+			data.push(person)
+		}
+	}
+	res.json(data);
+});
+
 //returns all rows that fit user inputted queries
 app.get('/searchpeople', function(req, res){
 	
