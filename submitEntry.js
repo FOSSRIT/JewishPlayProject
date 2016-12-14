@@ -2,6 +2,55 @@
 // Jewish Play Project
 // submitEntry.html Javascript
 ============================*/
+window.onload = main;
+
+function main()
+{
+	var addRowButtons = document.getElementsByClassName("addRowButton");
+	for(var i = 0; i < addRowButtons.length; i++)
+	{
+		addRowButtons[i].onclick = function(e)
+		{
+			console.log(e);
+			var parentID = e.target.parentElement.id;
+			var wrapper = document.getElementById(parentID + "Wrapper");
+			var nextIndex = parseInt(wrapper.lastChild.getAttribute("index")) + 1;
+			
+			var container = document.createElement("div");
+			container.id = parentID + "Container_" + nextIndex;
+			container.setAttribute("index", nextIndex);
+			container.innerHTML = "<input type='text' class='" + parentID + "' id='" + parentID + "_" + nextIndex + "' index=" + nextIndex + "></input><button id='" + parentID + "DeleteRow_" + nextIndex + "' index=" + nextIndex + ">X</button><br />";
+			
+			if(parentID.includes("Sources") && !e.repeated)
+			{
+				var button = document.getElementById(parentID.substr(0,1) + "SourceTitlesAddRow");
+				button.onclick({target:button, repeated:true});
+			}
+			if(parentID.includes("SourceTitles") && !e.repeated)
+			{
+				var button = document.getElementById(parentID.substr(0,1) + "SourcesAddRow");
+				button.onclick({target:button, repeated:true});
+			}
+			wrapper.appendChild(container);
+			document.getElementById(parentID + "DeleteRow_" + nextIndex).onclick = function(e)
+			{
+				wrapper.removeChild(document.getElementById(parentID + "Container_" + nextIndex));
+			
+				if(parentID.includes("Sources") && !e.repeated)
+				{
+					var button = document.getElementById(parentID.substr(0,1) + "SourceTitlesDeleteRow_" + nextIndex);
+					button.onclick({target:button, repeated:true});
+				}
+				if(parentID.includes("SourceTitles") && !e.repeated)
+				{
+					var button = document.getElementById(parentID.substr(0,1) + "SourcesDeleteRow_" + nextIndex);
+					button.onclick({target:button, repeated:true});
+				}
+			};
+			
+		}
+	}
+}
 
 function change(obj) 
 {
