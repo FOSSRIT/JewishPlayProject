@@ -688,7 +688,7 @@ function parseArrayInput(list)
     {
         values.push(parseTextInput(list[i].value));
     }
-    var string = "{" + values.toString() + "}";
+    var string = "{\"" + values.toString() + "\"}";
     return string;
 }
 

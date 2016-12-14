@@ -682,7 +682,6 @@ function setupToyTypesDropdown(toyTypes)
     dropdown += "</select>";
     
     document.getElementById("typesDropdown").innerHTML = dropdown;
-	
 }
 
 function parseTextInput(text)
@@ -697,7 +696,7 @@ function parseArrayInput(list)
     {
         values.push(parseTextInput(list[i].value));
     }
-    var string = "{" + values.toString() + "}";
+    var string = "{\"" + values.toString() + "\"}";
     return string;
 }
 

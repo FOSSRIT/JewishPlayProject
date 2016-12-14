@@ -660,6 +660,10 @@ app.get('/toys', function(req, res){
 	res.json({toys:toys, toytypes:toytypes});
 });
 
+app.get('/toytypes', function(req, res){
+	res.json(toytypes);
+});
+
 app.get('/searchtoys', function(req, res){
 	
 	

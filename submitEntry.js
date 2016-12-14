@@ -50,6 +50,32 @@ function main()
 			
 		}
 	}
+	
+	$.ajax({
+		url: 'http://localhost:3000/toytypes',						
+		success: function(data) {
+			console.log('success');
+			console.log(data);
+			g_data = data.toys;
+            setupToyTypesDropdown(data);
+		},
+		error: function(data) {
+			console.log('error');
+			console.log(data);
+			
+			var mockData = [
+				{Name:"One", SubTypes:["Alpha", "Bravo"]},
+				{Name:"Two", SubTypes:["Charlie", "Delta"]},
+				{Name:"Three", SubTypes:["Echo", "Foxtrot", "Golf"]},
+			];
+			
+            setupToyTypesDropdown(mockData);
+			// two arguments: the id of the Timeline container (no '#')
+			// and the JSON object or an instance of TL.TimelineConfig created from
+			// a suitable JSON object
+			//window.timeline = new TL.Timeline('timeline-embed', 'marktwain_test.json');
+		}
+	});
 }
 
 function change(obj) 
@@ -86,14 +112,171 @@ function submit()
     var type = document.getElementById("typeSelect").value;
     if(type == 'people')
     {
-        
+        var data = {};
+		data.FirstName = parseTextInput(document.getElementById("pFirstName").value);
+		data.MiddleName = parseTextInput(document.getElementById("pMiddleName").value);
+		data.LastName = parseTextInput(document.getElementById("pLastName").value);
+		data.BirthYear = parseTextInput(document.getElementById("pBirthYear").value);
+		data.DeathYear = parseTextInput(document.getElementById("pDeathYear").value);
+		data.Companies = parseArrayInput(document.getElementsByClassName("pCompanies"));
+		data.Toys = parseArrayInput(document.getElementsByClassName("pToys"));
+		data.Bio = parseTextInput(document.getElementById("pBio").value);
+		data.Picture = parseTextInput(document.getElementById("pPicture").value);
+		data.Sources = parseArrayInput(document.getElementsByClassName("pSources"));
+		data.SourceTitles = parseArrayInput(document.getElementsByClassName("pSourceTitles"));
+		data.Live = document.getElementById("pLive").checked;
+		
+		if(data.FirstName == null || data.LastName == null)
+		{
+			alert("First Name and Last Name can't be null");
+		}
+		else
+		{
+			$.ajax({
+				type: "POST",
+				url: 'http://localhost:3000/addpeople',
+				data: {data:JSON.stringify(data)},				
+				success: function(data) {
+					console.log('success');
+					console.log(data);
+					location.reload();
+				}//,
+				// error: function(data) {
+					// console.log('error');
+					// console.log(data);
+					
+					// // two arguments: the id of the Timeline container (no '#')
+					// // and the JSON object or an instance of TL.TimelineConfig created from
+					// // a suitable JSON object
+					// //window.timeline = new TL.Timeline('timeline-embed', 'marktwain_test.json');
+				// }
+			});
+		}
+		
+		console.log(data);
 	}
 	else if(type == 'companies')
     {
-        
+		var data = {};
+		data.Name = parseTextInput(document.getElementById("cName").value);
+		data.FoundingYear = parseTextInput(document.getElementById("cFoundingYear").value);
+		data.ClosingYear = parseTextInput(document.getElementById("cClosingYear").value);
+		data.FoundingLocation = parseTextInput(document.getElementById("cFoundingLocation").value);
+		data.People = parseArrayInput(document.getElementsByClassName("cPeople"));
+		data.Toys = parseArrayInput(document.getElementsByClassName("cToys"));
+		data.Description = parseTextInput(document.getElementById("cDescription").value);
+		data.Website = parseTextInput(document.getElementById("cWebsite").value);
+		data.Logo = parseTextInput(document.getElementById("cLogo").value);
+		data.CurrentOwner = parseTextInput(document.getElementById("cCurrentOwner").value);
+		data.Sources = parseArrayInput(document.getElementsByClassName("cSources"));
+		data.SourceTitles = parseArrayInput(document.getElementsByClassName("cSourceTitles"));
+		data.Live = document.getElementById("cLive").checked;
+		
+		if(data.Name == null)
+		{
+			alert("Name can't be null");
+		}
+		else
+		{
+			$.ajax({
+				type: "POST",
+				url: 'http://localhost:3000/addcompanies',
+				data: {data:JSON.stringify(data)},				
+				success: function(data) {
+					console.log('success');
+					console.log(data);
+					location.reload();
+				}//,
+				// error: function(data) {
+					// console.log('error');
+					// console.log(data);
+					
+					// // two arguments: the id of the Timeline container (no '#')
+					// // and the JSON object or an instance of TL.TimelineConfig created from
+					// // a suitable JSON object
+					// //window.timeline = new TL.Timeline('timeline-embed', 'marktwain_test.json');
+				// }
+			});
+		}
+		
+		console.log(data);
 	}
 	else if(type == 'toys')
     {
-        
+        var data = {};
+		data.Name = parseTextInput(document.getElementById("tName").value);
+		data.Year = parseTextInput(document.getElementById("tYear").value);
+		data.Companies = parseArrayInput(document.getElementsByClassName("tCompanies"));
+		data.People = parseArrayInput(document.getElementsByClassName("tPeople"));
+		data.Description = parseTextInput(document.getElementById("tDescription").value);
+		data.Picture = parseTextInput(document.getElementById("tPicture").value);
+		data.Sources = parseArrayInput(document.getElementsByClassName("tSources"));
+		data.SourceTitles = parseArrayInput(document.getElementsByClassName("tSourceTitles"));
+		data.Type = parseTextInput(document.getElementById("tType").value);
+		data.Live = document.getElementById("tLive").checked;
+		
+		if(data.Name == null)
+		{
+			alert("Name can't be null");
+		}
+		else
+		{
+			$.ajax({
+				type: "POST",
+				url: 'http://localhost:3000/addtoys',
+				data: {data:JSON.stringify(data)},				
+				success: function(data) {
+					console.log('success');
+					console.log(data);
+					location.reload();
+				}//,
+				// error: function(data) {
+					// console.log('error');
+					// console.log(data);
+					
+					// // two arguments: the id of the Timeline container (no '#')
+					// // and the JSON object or an instance of TL.TimelineConfig created from
+					// // a suitable JSON object
+					// //window.timeline = new TL.Timeline('timeline-embed', 'marktwain_test.json');
+				// }
+			});
+		}
+		
+		console.log(data);
 	}
+}
+
+function setupToyTypesDropdown(toyTypes)
+{
+	console.log(toyTypes);
+    var dropdown = "Type:<select id='tType'>";
+    dropdown += "<option value=''>Select Type</option>";
+    for(var i = 0; i < toyTypes.length; i++)
+    {
+        dropdown += "<optgroup label='" + toyTypes[i].Name + "'>";
+        for(var j = 0; j < toyTypes[i].SubTypes.length; j++)
+        {
+            dropdown += "<option value='" + toyTypes[i].SubTypes[j] + "'>" + toyTypes[i].SubTypes[j] + "</option>";
+        }
+        dropdown += "</optgroup>";
+    }
+    dropdown += "</select>";
+    
+    document.getElementById("typesDropdown").innerHTML = dropdown;
+}
+
+function parseTextInput(text)
+{
+	return text == "" ? null : text;
+}
+
+function parseArrayInput(list)
+{
+    var values = [];
+    for (var i = 0; i < list.length; i++)
+    {
+        values.push(parseTextInput(list[i].value));
+    }
+    var string = "{\"" + values.toString() + "\"}";
+    return string;
 }
