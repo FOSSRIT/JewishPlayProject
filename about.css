@@ -1,0 +1,100 @@
+/*============================
+// Jewish Play Project
+// submitEntry.html Style Sheet
+============================*/
+
+body{
+	background-color: #e7f6ff;
+	color: #72115d;
+	font-family: 'Istok Web', sans-serif;
+}
+
+body img {
+	zoom: 70%;
+	padding-left: 10px;
+}
+
+ul.topnav {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: #228dff;
+	margin-left: 15%;
+	width: 70%;
+}
+
+ul.topnav li {float: left;}
+
+ul.topnav li a {
+	margin: 0;
+	display: block;
+	color: #e7f6ff;
+	text-align: center;
+	padding: 14px 30px;
+	text-decoration: none;
+	font-size: 18px;
+}
+
+ul.topnav li a:hover:not(.active) {
+	background-color: #97cbdc;
+	background-color: clear;
+}
+
+ul.topnav li.right {float: right;}
+
+@media screen and (max-width: 600px){
+	ul.topnav li.right,
+	ul.topnav li {float: none;}
+}
+
+#mainContainer {
+	display: inline;
+	margin-top: 10px;
+	background-color: #97cbdc;
+	width: 70%;
+	margin-left: 15%;
+	float: left;
+}
+
+hr {
+	height: 10px;
+	border: 0;
+	box-shadow: 0 5px 5px -5px #ffffff inset;
+}
+
+h1 {
+	padding: 0px;
+	margin: 20px;
+	font-size: 30px;
+}
+
+h2 { 
+	padding: 0px 20px 0px 30px;
+	font-size: 20px;
+}
+
+h3 {
+	margin: 5px 30px;
+	font-size: 18px;
+}
+
+h4 {
+	margin: 7px 30px;
+	font-size: 16px;
+}
+
+#mainContainer img {
+	float: left;
+	margin: 5px 30px;
+}
+
+p {
+	margin: 15px 30px;
+	font-size: 15px;
+}
+
+#staff {
+	height: 400px;
+	margin-top: 500px;
+}
