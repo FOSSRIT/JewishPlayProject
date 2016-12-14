@@ -34,7 +34,17 @@ function setupPage(data)
     var htmlString = "";
     
     document.title = data.Name;
+	
+	htmlString += "<div id='displayImage'>";
+    if(data.Picture)
+    {
+        htmlString += "<img src='" + data.Picture + "' alt='" + data.Name + "' /><br />";
+    }
+	
+	htmlString += "</div><div id='info'>";
+	
     htmlString += "<h1>" + data.Name + "</h1>";
+	htmlString += "<div id='year'>" + data.Year + "</div><br />";
     if(data.People && data.People.length > 0)
     {
         if(data.People.length == 1)
@@ -65,6 +75,7 @@ function setupPage(data)
             htmlString += "<a href='./companies?name=" + data.Companies[i] + "'>" + data.Companies[i] + "</a><br />";
         }
     }
+    htmlString += "<br />";
     if(data.Description)
     {
         htmlString += data.Description;
@@ -82,12 +93,8 @@ function setupPage(data)
             htmlString += "<a href='" + data.Sources[i] + "' target='_blank'>" + title  + "</a><br/>";
         }
     }
-    if(data.Picture)
-    {
-        htmlString += "<img src='" + data.Picture + "' alt='" + data.Name + "' /><br />";
-    }
+    htmlString += "<br/><br/><br/></div>"
     
-    console.log(htmlString);
     document.getElementById("infoContainer").innerHTML = htmlString;
 }
 

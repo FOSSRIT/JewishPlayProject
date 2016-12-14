@@ -32,11 +32,20 @@ function main()
 function setupPage(data)
 {
     var htmlString = "";
-    
+	
     document.title = data.Name;
+	
+	htmlString += "<div id='displayImage'>";
+    if(data.Logo)
+    {
+        htmlString += "<img src='" + data.Logo + "' alt='" + data.Name + "' /><br />";
+    }
+	
+	htmlString += "</div><div id='info'>";
+    
     htmlString += "<h1>" + data.Name + "</h1>";
     
-    htmlString += data.FoundingYear + " - ";
+    htmlString += "<div id='year'>" + data.FoundingYear + " - ";
     if(data.ClosingYear)
     {
         htmlString += data.ClosingYear;
@@ -45,7 +54,7 @@ function setupPage(data)
     {
         htmlString += "Present";
     }
-    htmlString += "<br />";
+    htmlString += "</div><br />";
     if(data.People && data.People.length > 0)
     {
         if(data.People.length == 1)
@@ -80,6 +89,7 @@ function setupPage(data)
             htmlString += "<a href='./toys?name=" + data.Toys[i] + "'>" + data.Toys[i] + "</a><br />";
         }
     }
+    htmlString += "<br />";
     if(data.Description)
     {
         htmlString += data.Description;
@@ -97,12 +107,8 @@ function setupPage(data)
             htmlString += "<a href='" + data.Sources[i] + "' target='_blank'>" + title  + "</a><br/>";
         }
     }
-    if(data.Logo)
-    {
-        htmlString += "<img src='" + data.Logo + "' alt='" + data.Name + "' /><br />";
-    }
+    htmlString += "<br/><br/><br/></div>"
     
-    console.log(htmlString);
     document.getElementById("infoContainer").innerHTML = htmlString;
 }
 
