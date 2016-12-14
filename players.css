@@ -9,6 +9,11 @@ body{
 	font-family: 'Istok Web', sans-serif;
 }
 
+body img {
+	zoom: 70%;
+	padding-left: 10px;
+}
+
 ul.topnav {
 	list-style-type: none;
 	margin: 0;
