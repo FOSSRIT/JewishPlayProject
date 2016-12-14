@@ -28,7 +28,15 @@ var toytypes = [];
 
 function updateJSON()
 {
-	json = {events: []};
+	json = {
+		events: [],
+		title: {text:{}}
+	};
+	
+	json.title.text.headline = "Jewish Play Project Timeline";
+	
+	json.title.text.text = "The timeline currently covers about half of what we've found in terms of people and companies and only a few represenative toys, game, and sources for each at this time. We'll begin updating it on a regular basis starting at the end of January 2015. If you'd like to be notified electronically when we post updates, please use the appropriate address in the about section. <br><br>You can navigate the timeline chronologically by dragging on it, clicking the arrow brackets on either side of the content on the screen or using the arrow keys on your keyboard. You can contract (less dragging, more overlapped labels) or expand (more dragging, less overlap) by clicking on the magnifying glass icons of the left side of the timeline. Click on an image or media clip to be taken to the website it came from.  <br><br> All the rights to external media and links lie with the source website providers. Our timeline is powered by <a href='http://timeline.knightlab.com'>TimelineJS</a>, an open source tool from Knight Lab.";
+	
 	people = [];
 	var index = 0;
 	var pquery = client.query("SELECT * FROM \"People\"");
@@ -294,8 +302,8 @@ function updateJSON()
 								if(event.People[j] == json.events[k].text.headline)
 								{
 									//console.log("{C" + j + "}");
-									///event.text.text = event.text.text.replace("{P" + j + "}", "<a href='#" + json.events[k].unique_id + "'>" + event.People[j] + "</a>");
-									//break;
+									// event.text.text = event.text.text.replace("{P" + j + "}", "<a href='#" + json.events[k].unique_id + "'>" + event.People[j] + "</a>");
+									// break;
 								}
 							}
 						}
@@ -314,8 +322,8 @@ function updateJSON()
 								if(event.Companies[j] == json.events[k].text.headline)
 								{
 									//console.log("{C" + j + "}");
-									///event.text.text = event.text.text.replace("{C" + j + "}", "<a href='#" + json.events[k].unique_id + "'>" + event.Companies[j] + "</a>");
-									//break;
+									// event.text.text = event.text.text.replace("{C" + j + "}", "<a href='#" + json.events[k].unique_id + "'>" + event.Companies[j] + "</a>");
+									// break;
 								}
 							}
 						}
@@ -334,8 +342,8 @@ function updateJSON()
 								if(event.Toys[j] == json.events[k].text.headline)
 								{
 									//console.log("{T" + j + "}");
-									///event.text.text = event.text.text.replace("{T" + j + "}", "<a href='#" + json.events[k].unique_id + "'>" + event.Toys[j] + "</a>");
-									//break;
+									// event.text.text = event.text.text.replace("{T" + j + "}", "<a href='#" + json.events[k].unique_id + "'>" + event.Toys[j] + "</a>");
+									// break;
 								}
 							}
 						}
