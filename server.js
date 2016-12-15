@@ -395,7 +395,22 @@ app.get('/browsepeople', function(req, res){
 	var queries = JSON.parse(req.query.data);
 	if(queries.name && queries.name != "")
 	{
-		//TODO:BROWSE PEOPLE SEARCH
+		var query = "SELECT * FROM \"People\" WHERE \"People\".\"FirstName\" || ' ' || \"People\".\"MiddleName\" || ' ' || \"People\".\"LastName\" ~* '.*" + queries.name + ".*' AND \"People\".\"Live\" = True";
+		
+		console.log(query);
+		
+		results = [];
+		var pquery = client.query(query);
+		
+		pquery.on('row', function(row) 
+		{
+			results.push(row);
+		});
+		
+		pquery.on('end', function(){
+			//console.log(results);
+			makeList(results);
+		});
 	}
 	else
 	{
@@ -655,69 +670,33 @@ app.get('/person', function(req, res){
     }
     else if(queries.name)
     {
-        queries.name = queries.name.replace(/'/g, "''");
+		queries.name = queries.name.replace(/'/g, "''");
         queries.name = queries.name.replace(/[\(\)]/g, "\\$&");
-        var nameArray = queries.name.split(" ");
-        function guessName(array, left, right)
+        var query = "SELECT * FROM \"People\" WHERE (lower(\"People\".\"FirstName\" || ' ' || \"People\".\"MiddleName\" || ' ' || \"People\".\"LastName\") = lower('" + queries.name + "') OR lower(\"People\".\"FirstName\" || ' ' || \"People\".\"LastName\") = lower('" + queries.name + "') ) AND \"People\".\"Live\" = True";
+        
+        results = [];
+        var pquery = client.query(query);
+        
+        pquery.on('row', function(row) 
         {
-            if(left >= array.length)
+            results.push(row);
+        });	
+        
+        pquery.on('end', function(){
+            console.log(results);
+            if(results.length == 0)
             {
                 res.status(500).send("No Results");
-                return;
             }
-            var firstName = "";
-            for(var i = 0; i < left; i++)
+            else if(results.length == 1)
             {
-                firstName += array[i] + " ";
+                res.json(results[0]);
             }
-            firstName = firstName.trim();
-            
-            var lastName = "";
-            for(var i = right; i < array.length; i++)
+            else
             {
-                lastName += array[i] + " ";
+                res.status(500).send("Too Many Results");
             }
-            lastName = lastName.trim();
-            
-            console.log("guessing FN:" + firstName + " LN:" + lastName);
-            
-             var query = "SELECT * FROM \"People\" WHERE ";
-            query += "lower(\"People\".\"FirstName\") = lower('" + firstName + "') AND ";
-            query += "lower(\"People\".\"LastName\") = lower('" + lastName + "') AND ";
-            query += "\"People\".\"Live\" = True";
-            
-            results = [];
-            var pquery = client.query(query);
-            
-            pquery.on('row', function(row) 
-            {
-                results.push(row);
-            });	
-            
-            pquery.on('end', function(){
-                if(results.length == 0)
-                {
-                    if(right <= left)
-                    {
-                        guessName(array, left+1, array.length - 1);
-                    }
-                    else
-                    {
-                        guessName(array, left, right - 1);
-                    }
-                }
-                else if(results.length == 1)
-                {
-                    res.json(results[0]);
-                }
-                else
-                {
-                    console.log(results);
-                    res.status(500).send("Too Many Results");
-                }
-            });
-        }
-        guessName(nameArray, 1, nameArray.length - 1);
+        });
     }
     else
     {
@@ -773,7 +752,38 @@ app.get('/browsetoys', function(req, res){
 			//subType is all, superType exists and is not all, display all toys under supertype
 			else
 			{
-				//TODO: that^
+				var query = "SELECT * FROM \"Toys\" WHERE \"Toys\".\"Live\" = True AND ( "
+					
+				for(var i = 0; i < toytypes.length; i++)
+				{
+					if(toytypes[i].Name.toLowerCase() == queries.superType.toLowerCase())
+					{
+						var data = [];
+						for(var j = 0; j < toytypes[i].SubTypes.length; j++)
+						{
+							query += "lower(\"Toys\".\"Type\") = lower('" + toytypes[i].SubTypes[j] + "') OR ";
+						}
+						query += "false)"
+						break;
+					}
+				}
+
+					
+				console.log(query);
+				
+				results = [];
+				var pquery = client.query(query);
+				//fired after last row is emitted
+
+				pquery.on('row', function(row) 
+				{
+					results.push(row);
+				});
+				
+				pquery.on('end', function(){
+					//console.log(results);
+					makeList(results);
+				});
 			}
 		}
 		//subtype exists and is not all, display all toys under subtype

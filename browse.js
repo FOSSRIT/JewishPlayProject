@@ -89,7 +89,7 @@ function setupPage(data, category)
 		var html = "";
 		var name = data[i].name;
 		html += "<td>" + data[i].name + "</td>";
-		html += "<td><img src='" + data[i].picture + "' /></td>";
+		html += "<td><img class='tableImage' src='" + data[i].picture + "' /></td>";
 		html += "<td>" + data[i].year + "</td>";
 		html += "<td>" + data[i].description + "</td>";
 		row.innerHTML = html;

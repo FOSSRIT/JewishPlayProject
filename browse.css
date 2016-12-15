@@ -75,7 +75,7 @@ h2 {
 }
 
 #mainContainer img {
-	width: auto;
+	max-width: 150px;
     height: auto;
     display: block;
 }
