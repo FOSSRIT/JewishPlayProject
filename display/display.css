@@ -68,15 +68,61 @@ ul.topnav li.right {float: right;}
     width: 70%;
 }
 
-#year {
+#submitEdit, #cancelEdit, #editPage {
+	border: none;
     background-color: #228dff;
     color: #e7f6ff;
     padding: 7px;
     font-size: 13px;
     text-align: center;
     width: 75px;
-    border-radius: 15px;
+    border-radius: 20px;
 	box-shadow: 2px 2px 5px rgba(0,0,0,.25);
+	margin: 15px;
+}
+
+label {
+	padding-left: 30px;
+}
+
+select, input { 
+	margin-left: 20px;
+	width: 25%;
+	padding: 7px;
+	box-shadow: 1px 1px 10px rgba(0,0,0,.25);
+	border-radius: 5px;
+	border: 2px solid #dde8f0;
+}
+
+input[type="checkbox"] {
+	box-shadow: none;
+	margin-left: 0px;
+	padding: 0px;
+	width: 10%;
+}
+
+input#pBio, input#cDescription, input#tDescription {
+	padding: 50px;
+}
+
+.required, #required  {
+	color: red;
+}
+
+.addRowButton {
+	color: #e7f6ff; 
+	background-color: #228dff; 
+	text-align: center; 
+	font-size: 16px; 
+	box-shadow: 1px 1px 10px rgba(0,0,0,.25); 
+	border: none; 
+	padding: 7px 12px; 
+	border-radius: 5px;
+	margin: 5px;
+}
+
+#editContainer {
+	margin: 30px;
 }
 
 h1 {

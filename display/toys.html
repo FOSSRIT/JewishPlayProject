@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="display.css">
 </head>
 <body>
-    <a href="./"> <img src="../img/jpp-logo2.png" alt="JPP Logo" style="margin-left:15%;" /></a>
+    <a href="../"> <img src="../img/jpp-logo2.png" alt="JPP Logo" style="margin-left:15%;" /></a>
 	<ul class="topnav">
 		<li><a href="../browse.html?category=people">People</a></li>
         <li><a href="../browse.html?category=toys">Toys</a></li>
@@ -20,8 +20,46 @@
 		<li><a href="../submitEntry.html">Submit</a></li>
 	</ul>
     <div id ="mainContainer">
-        <div id='infoContainer'>
-        </div>
+		<div id='displayContainer'>
+			<div id='infoContainer'>
+			</div>
+			<button id='editPage' onclick='editPage()'>Edit</button>
+		</div>
+		<div id='editContainer' style="display:none;">
+			<h1>Edit</h1>
+			<p><label>Name: <span class="required">*</span>
+				<input id="eName" type="textbox"></input>
+				</label>
+			<p><label>Year:
+				<input id="eYear" type="textbox"></input>
+				</label>
+			<p><label>Companies:
+                <div id='eCompanies'><div id='eCompaniesWrapper'><div id='eCompaniesContainer_0' index=0><input type='eext' class='eCompanies' id='eCompanies_0' index=0></input><br /></div></div><button id='eCompaniesAddRow' class="addRowButton">+</button></div>
+				</label>
+			<p><label>People:
+                <div id='ePeople'><div id='ePeopleWrapper'><div id='ePeopleContainer_0' index=0><input type='eext' class='ePeople' id='ePeople_0' index=0></input><br /></div></div><button id='ePeopleAddRow' class="addRowButton">+</button></div>
+				</label>
+			<p><label>Picture:
+				<input id="ePicture" type="textbox"></input>
+				</label>
+			<p><label>Sources:
+                <div id='eSources'><div id='eSourcesWrapper'><div id='eSourcesContainer_0' index=0><input type='eext' class='eSources' id='eSources_0' index=0></input><br /></div></div><button id='eSourcesAddRow' class="addRowButton">+</button></div>
+				</label>
+			<p><label>Source Titles:
+                <div id='eSourceTitles'><div id='eSourceTitlesWrapper'><div id='eSourceTitlesContainer_0' index=0><input type='eext' class='eSourceTitles' id='eSourceTitles_0' index=0></input><br /></div></div><button id='eSourceTitlesAddRow' class="addRowButton">+</button></div>
+				</label>
+			<p><label>Description:
+				<input id="eDescription" type="textbox"></input>
+				</label>
+			<p><label id="typesDropdown">Type:
+				</label>
+			<p><label>Live:
+				<input id="eLive" type="checkbox"></input>
+				</label>
+			<br><br>
+			<button id='cancelEdit' onclick="cancelEdit()">Cancel</button>
+			<button id='submitEdit' onclick="submitEdit()">Submit</button>
+		</div>
     </div>
 </body>
 </html>

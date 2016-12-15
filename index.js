@@ -4,25 +4,24 @@ function main()
 {
     document.getElementById("searchButton").onclick = function() 
     {
-        var pFristName = document.getElementById("firstName").value;
-        var pLastName = document.getElementById("lastName").value;
+        var pName = document.getElementById("personName").value;
         var tName = document.getElementById("toyName").value;
         var cName = document.getElementById("companyName").value;
         
-        if(pFristName != "" || pLastName != "")
+        if(pName != "")
         {
             console.log("person");
-            window.location.href = "./display/people?firstName=" + pFristName + "&lastName=" + pLastName;
+            window.location.href = "./browse?category=people&name=" + pName;
         }
         else if (tName != "")
         {
             console.log("toy");
-            window.location.href = "./display/toys?name=" + tName;
+            window.location.href = "./browse?category=toys&name=" + tName;
         }
         else if (cName != "")
         {
             console.log("company");
-            window.location.href = "./display/companies?name=" + cName;
+            window.location.href = "./browse?category=companies&name=" + cName;
         }
         else
         {

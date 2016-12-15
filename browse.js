@@ -6,6 +6,7 @@ function main()
 	var category = getParameterByName("category");
 	if(category.toLowerCase() == "toys")
 	{
+		document.getElementById("header").innerHTML = "Toys";
 		var superType = getParameterByName("superType");
 		var subType = getParameterByName("subType");
 		var name = getParameterByName("name");
@@ -32,6 +33,7 @@ function main()
 	}
 	else if(category.toLowerCase() == "companies")
 	{
+		document.getElementById("header").innerHTML = "Companies";
 		var name = getParameterByName("name");
 		var data = {name:name}
 		$.ajax({
@@ -56,6 +58,7 @@ function main()
 	}
 	else //defaults to people
 	{
+		document.getElementById("header").innerHTML = "People";
 		var name = getParameterByName("name");
 		var data = {name:name}
 		$.ajax({
@@ -89,7 +92,14 @@ function setupPage(data, category)
 		var html = "";
 		var name = data[i].name;
 		html += "<td>" + data[i].name + "</td>";
-		html += "<td><img class='tableImage' src='" + data[i].picture + "' /></td>";
+		if(data[i].picture && data[i].picture != "")
+		{
+			html += "<td><img class='tableImage' src='" + data[i].picture + "' /></td>";
+		}
+		else
+		{
+			html += "<td><img class='tableImage' src='missingImage.png' /></td>";
+		}
 		html += "<td>" + data[i].year + "</td>";
 		html += "<td>" + data[i].description + "</td>";
 		row.innerHTML = html;
@@ -98,18 +108,6 @@ function setupPage(data, category)
 			row.onclick = function(e)
 			{
 				window.location.href = href;
-				// if(category.toLowerCase() == "toys")
-				// {
-					// window.location.href = "./display/toys?name=" + name;
-				// }
-				// else if(category.toLowerCase() == "companies")
-				// {
-					// window.location.href = "./display/companies?name=" + name;
-				// }
-				// else //defaults to people
-				// {
-					// window.location.href = "./display/people?name=" + name;
-				// }
 			}
 		})(row, data[i].href);
 		tableBody.appendChild(row);

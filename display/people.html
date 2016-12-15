@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="display.css">
 </head>
 <body>
-    <a href="./"> <img src="../img/jpp-logo2.png" alt="JPP Logo" style="margin-left:15%;" /></a>
+    <a href="../"> <img src="../img/jpp-logo2.png" alt="JPP Logo" style="margin-left:15%;" /></a>
 	<ul class="topnav">
 		<li><a href="../browse.html?category=people">People</a></li>
         <li><a href="../browse.html?category=toys">Toys</a></li>
@@ -20,8 +20,51 @@
 		<li><a href="../submitEntry.html">Submit</a></li>
 	</ul>
     <div id ="mainContainer">
-        <div id='infoContainer'>
-        </div>
+		<div id='displayContainer'>
+			<div id='infoContainer'>
+			</div>
+			<button id='editPage' onclick="editPage()">Edit</button>
+		</div>
+		<div id='editContainer' style="display:none;">
+			<h1>Edit</h1>
+			<p><label>Name: <span class="required">*</span>
+				<input id="eFirstName" type="textbox" placeholder="First"></input>
+				<input id="eLastName" type="textbox" placeholder="Last"></input>
+				<label>
+			<p><label>Middle Name:
+				<input id="eMiddleName" type="textbox"></input>
+				</label>
+			<p><label>Birth Year:
+				<input id="eBirthYear" type="textbox"></input>
+				</label>
+			<p><label>Death Year:
+				<input id="eDeathYear" type="textbox"></input>
+				</label>
+			<p><label>Companies:
+                <div id='eCompanies'><div id='eCompaniesWrapper'><div id='eCompaniesContainer_0' index=0><input type='text' class='eCompanies' id='eCompanies_0' index=0></input><br /></div></div><button id='eCompaniesAddRow' class="addRowButton">+</button></div>
+				</label>
+			<p><label>Toys:
+                <div id='eToys'><div id='eToysWrapper'><div id='eToysContainer_0' index=0><input type='text' class='eToys' id='eToys_0' index=0></input><br /></div></div><button id='eToysAddRow' class="addRowButton">+</button></div>
+				</label>
+			<p><label>Picture:
+				<input id="ePicture" type="textbox"></input>
+				</label>
+			<p><label>Sources:
+                <div id='eSources'><div id='eSourcesWrapper'><div id='eSourcesContainer_0' index=0><input type='text' class='eSources' id='eSources_0' index=0></input><br /></div></div><button id='eSourcesAddRow' class="addRowButton">+</button></div>
+				</label>
+			<p><label>Source Titles:
+                <div id='eSourceTitles'><div id='eSourceTitlesWrapper'><div id='eSourceTitlesContainer_0' index=0><input type='text' class='eSourceTitles' id='eSourceTitles_0' index=0></input><br /></div></div><button id='eSourceTitlesAddRow' class="addRowButton">+</button></div>
+				</label>
+			<p><label>Bio:
+				<input id="eBio" type="textbox"></input>
+				</label>
+			<p><label>Live:
+				<input id="eLive" type="checkbox"></input>
+				</label>
+			<br><br>
+			<button id='cancelEdit' onclick="cancelEdit()">Cancel</button>
+			<button id='submitEdit' onclick="submitEdit()">Submit</button>
+		</div>
     </div>
 </body>
 </html>

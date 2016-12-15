@@ -395,7 +395,17 @@ app.get('/browsepeople', function(req, res){
 	var queries = JSON.parse(req.query.data);
 	if(queries.name && queries.name != "")
 	{
-		var query = "SELECT * FROM \"People\" WHERE \"People\".\"FirstName\" || ' ' || \"People\".\"MiddleName\" || ' ' || \"People\".\"LastName\" ~* '.*" + queries.name + ".*' AND \"People\".\"Live\" = True";
+		//var query = "SELECT * FROM \"People\" WHERE \"People\".\"FirstName\" || ' ' || \"People\".\"MiddleName\" || ' ' || \"People\".\"LastName\" ~* '.*" + queries.name + ".*' AND \"People\".\"Live\" = True";
+
+		var nameArray = queries.name.split(" ");
+		var query = "SELECT * FROM \"People\" WHERE "
+		
+		for (var i = 0; i < nameArray.length; i++)
+		{
+			query += "(\"People\".\"FirstName\" || ' ' || \"People\".\"MiddleName\" || ' ' || \"People\".\"LastName\" ~* '.*" + nameArray[i] + ".*' OR \"People\".\"FirstName\" || ' ' || \"People\".\"LastName\" ~* '.*" + nameArray[i] + ".*') AND ";
+		}
+		
+		query += "\"People\".\"Live\" = True";
 		
 		console.log(query);
 		
@@ -472,7 +482,6 @@ app.get('/browsepeople', function(req, res){
 
 //returns all rows that fit user inputted queries
 app.get('/searchpeople', function(req, res){
-	
 	
 	var queries = JSON.parse(req.query.data);
 	console.log(queries);
@@ -622,7 +631,7 @@ app.post('/editpeople', function(req, res){
 			else
 			{
 				updateJSON();
-				res.send("people row edited!");
+				res.send({FirstName:row.FirstName, LastName:row.LastName});
 				console.log('people row edited');
 			}
 		}
@@ -722,7 +731,16 @@ app.get('/browsetoys', function(req, res){
 	//name exists, display all toys that match the query
 	if(queries.name && queries.name != "")
 	{
-		var query = "SELECT * FROM \"Toys\" WHERE \"Toys\".\"Name\" ~* '.*" + queries.name + ".*' AND \"Toys\".\"Live\" = True";
+		var nameArray = queries.name.split(" ");
+		
+		var query = "SELECT * FROM \"Toys\" WHERE ";
+		
+		for (var i = 0; i < nameArray.length; i++)
+		{
+			query += "\"Toys\".\"Name\" ~* '.*" + nameArray[i] + ".*' AND ";
+		}
+		
+		query += "\"Toys\".\"Live\" = True";
 		
 		results = [];
 		var pquery = client.query(query);
@@ -1058,8 +1076,7 @@ app.post('/edittoys', function(req, res){
 			else
 			{
 				updateJSON();
-				res.send("toys row edited!");
-				console.log('toys row edited');
+				res.send({Name:row.Name});
 			}
 		}
 	);
@@ -1122,7 +1139,18 @@ app.get('/browsecompanies', function(req, res){
 	var queries = JSON.parse(req.query.data);
 	if(queries.name && queries.name != "")
 	{
-		var query = "SELECT * FROM \"Companies\" WHERE \"Companies\".\"Name\" ~* '.*" + queries.name + ".*' AND \"Companies\".\"Live\" = True";
+		var nameArray = queries.name.split(" ");
+		
+		var query = "SELECT * FROM \"Companies\" WHERE ";
+		
+		for (var i = 0; i < nameArray.length; i++)
+		{
+			query += "\"Companies\".\"Name\" ~* '.*" + nameArray[i] + ".*' AND ";
+		}
+		
+		query += "\"Companies\".\"Live\" = True";
+		
+		console.log(query);
 		
 		results = [];
 		var pquery = client.query(query);
@@ -1345,8 +1373,7 @@ app.post('/editcompanies', function(req, res){
 			else
 			{
 				updateJSON();
-				res.send("companies row edited!");
-				console.log('companies row edited');
+				res.send({Name:row.Name});
 			}
 		}
 	);

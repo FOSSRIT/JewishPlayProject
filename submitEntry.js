@@ -20,6 +20,7 @@ function main()
 			container.id = parentID + "Container_" + nextIndex;
 			container.setAttribute("index", nextIndex);
 			container.innerHTML = "<input type='text' class='" + parentID + "' id='" + parentID + "_" + nextIndex + "' index=" + nextIndex + "></input><button id='" + parentID + "DeleteRow_" + nextIndex + "' index=" + nextIndex + " style='color:#e7f6ff; background-color:#228dff; text-align:center; font-size:16px; box-shadow:1px 1px 10px rgba(0,0,0,.25); border: none; padding: 7px 12px; border-radius: 5px; margin-left:15px; margin-bottom: 5px;' >-</button><br />";
+			wrapper.appendChild(container);
 			
 			if(parentID.includes("Sources") && !e.repeated)
 			{
@@ -31,7 +32,6 @@ function main()
 				var button = document.getElementById(parentID.substr(0,1) + "SourcesAddRow");
 				button.onclick({target:button, repeated:true});
 			}
-			wrapper.appendChild(container);
 			document.getElementById(parentID + "DeleteRow_" + nextIndex).onclick = function(e)
 			{
 				wrapper.removeChild(document.getElementById(parentID + "Container_" + nextIndex));
@@ -62,14 +62,6 @@ function main()
 		error: function(data) {
 			console.log('error');
 			console.log(data);
-			
-			var mockData = [
-				{Name:"One", SubTypes:["Alpha", "Bravo"]},
-				{Name:"Two", SubTypes:["Charlie", "Delta"]},
-				{Name:"Three", SubTypes:["Echo", "Foxtrot", "Golf"]},
-			];
-			
-            setupToyTypesDropdown(mockData);
 			// two arguments: the id of the Timeline container (no '#')
 			// and the JSON object or an instance of TL.TimelineConfig created from
 			// a suitable JSON object
@@ -152,8 +144,6 @@ function submit()
 				// }
 			});
 		}
-		
-		console.log(data);
 	}
 	else if(type == 'companies')
     {
@@ -198,8 +188,6 @@ function submit()
 				// }
 			});
 		}
-		
-		console.log(data);
 	}
 	else if(type == 'toys')
     {
@@ -241,8 +229,6 @@ function submit()
 				// }
 			});
 		}
-		
-		console.log(data);
 	}
 }
 
