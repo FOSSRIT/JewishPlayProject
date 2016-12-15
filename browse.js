@@ -6,16 +6,61 @@ function main()
 	var category = getParameterByName("category");
 	if(category.toLowerCase() == "toys")
 	{
-		
+		var superType = getParameterByName("superType");
+		var subType = getParameterByName("subType");
+		var name = getParameterByName("name");
+		var data = {name:name, superType:superType, subType:subType};
+		$.ajax({
+			url: 'http://localhost:3000/browsetoys',
+			data:{data:JSON.stringify(data)},						
+			success: function(data) {
+				console.log('success');
+				console.log(data);
+				setupPage(data, category);
+
+			},
+			error: function(data) {
+				console.log('error');
+				console.log(data);
+				
+				// two arguments: the id of the Timeline container (no '#')
+				// and the JSON object or an instance of TL.TimelineConfig created from
+				// a suitable JSON object
+				//window.timeline = new TL.Timeline('timeline-embed', 'marktwain_test.json');
+			}
+		});
 	}
 	else if(category.toLowerCase() == "companies")
 	{
-		
+		var name = getParameterByName("name");
+		var data = {name:name}
+		$.ajax({
+			url: 'http://localhost:3000/browsecompanies',	
+			data:{data:JSON.stringify(data)},						
+			success: function(data) {
+				console.log('success');
+				console.log(data);
+				setupPage(data, category);
+
+			},
+			error: function(data) {
+				console.log('error');
+				console.log(data);
+				
+				// two arguments: the id of the Timeline container (no '#')
+				// and the JSON object or an instance of TL.TimelineConfig created from
+				// a suitable JSON object
+				//window.timeline = new TL.Timeline('timeline-embed', 'marktwain_test.json');
+			}
+		});
 	}
 	else //defaults to people
 	{
+		var name = getParameterByName("name");
+		var data = {name:name}
 		$.ajax({
-			url: 'http://localhost:3000/browsepeople',						
+			url: 'http://localhost:3000/browsepeople',	
+			data:{data:JSON.stringify(data)},						
 			success: function(data) {
 				console.log('success');
 				console.log(data);
@@ -49,30 +94,26 @@ function setupPage(data, category)
 		html += "<td>" + data[i].description + "</td>";
 		row.innerHTML = html;
 		
-		(function(row, name, category) {
+		(function(row, href) {
 			row.onclick = function(e)
 			{
-				console.log(name);
-				if(category.toLowerCase() == "toys")
-				{
-					window.location.href = "./display/toys?name=" + name;
-				}
-				else if(category.toLowerCase() == "companies")
-				{
-					window.location.href = "./display/companies?name=" + name;
-				}
-				else //defaults to people
-				{
-					window.location.href = "./display/people?name=" + name;
-				}
+				window.location.href = href;
+				// if(category.toLowerCase() == "toys")
+				// {
+					// window.location.href = "./display/toys?name=" + name;
+				// }
+				// else if(category.toLowerCase() == "companies")
+				// {
+					// window.location.href = "./display/companies?name=" + name;
+				// }
+				// else //defaults to people
+				// {
+					// window.location.href = "./display/people?name=" + name;
+				// }
 			}
-		})(row, data[i].name, category);
+		})(row, data[i].href);
 		tableBody.appendChild(row);
 	}
-}
-
-function goToDisplay(category, name)
-{
 }
 
 function getParameterByName(name) {
