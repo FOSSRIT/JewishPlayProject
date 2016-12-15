@@ -392,53 +392,67 @@ app.get('/people', function(req, res){
 
 //get all live people rows
 app.get('/browsepeople', function(req, res){
-	var data = [];
-	for(var i = 0; i < people.length; i++)
+	var queries = JSON.parse(req.query.data);
+	if(queries.name && queries.name != "")
 	{
-		if(people[i].Live)
+		//TODO:BROWSE PEOPLE SEARCH
+	}
+	else
+	{
+		makeList(people);
+	}
+	
+	function makeList(people)
+	{
+		var data = [];
+		for(var i = 0; i < people.length; i++)
 		{
-			var person = {};
-			var name = people[i].FirstName;
-			name += people[i].MiddleName ? " " + people[i].MiddleName : "";
-			name += " " + people[i].LastName;
-			person.name = name;
-			if(people[i].Picture)
+			if(people[i].Live)
 			{
-				person.picture = people[i].Picture;
-			}
-			else
-			{
-				person.picture = "";
-			}
-			var year = people[i].BirthYear;
-			if(people[i].DeathYear)
-			{
-				year += " - " + people[i].DeathYear;
-			}
-			else
-			{
-				year += " - Present";
-			}
-			person.year = year;
-			if(people[i].Bio)
-			{
-				if(people[i].Bio.length > 252)
+				var person = {};
+				var name = people[i].FirstName;
+				name += people[i].MiddleName ? " " + people[i].MiddleName : "";
+				name += " " + people[i].LastName;
+				person.name = name;
+				person.href = "./display/people?name=" + name;
+				if(people[i].Picture)
 				{
-					person.description = people[i].Bio.substr(0, 250) + "...";
+					person.picture = people[i].Picture;
 				}
 				else
 				{
-					person.description = people[i].Bio;
+					person.picture = "";
 				}
+				var year = people[i].BirthYear;
+				if(people[i].DeathYear)
+				{
+					year += " - " + people[i].DeathYear;
+				}
+				else
+				{
+					year += " - Present";
+				}
+				person.year = year;
+				if(people[i].Bio)
+				{
+					if(people[i].Bio.length > 252)
+					{
+						person.description = people[i].Bio.substr(0, 250) + "...";
+					}
+					else
+					{
+						person.description = people[i].Bio;
+					}
+				}
+				else
+				{
+					person.description = "";
+				}
+				data.push(person)
 			}
-			else
-			{
-				person.description = "";
-			}
-			data.push(person)
 		}
+		res.json(data);
 	}
-	res.json(data);
 });
 
 //returns all rows that fit user inputted queries
@@ -723,6 +737,179 @@ app.get('/toytypes', function(req, res){
 	res.json(toytypes);
 });
 
+
+app.get('/browsetoys', function(req, res){
+	var queries = JSON.parse(req.query.data);
+	//name exists, display all toys that match the query
+	if(queries.name && queries.name != "")
+	{
+		var query = "SELECT * FROM \"Toys\" WHERE \"Toys\".\"Name\" ~* '.*" + queries.name + ".*' AND \"Toys\".\"Live\" = True";
+		
+		results = [];
+		var pquery = client.query(query);
+		//fired after last row is emitted
+
+		pquery.on('row', function(row) 
+		{
+			results.push(row);
+		});
+		
+		pquery.on('end', function(){
+			//console.log(results);
+			makeList(results);
+		});
+	}
+	//no name, subType exists
+	else if (queries.subType && queries.subType != "")
+	{
+		//subType is all
+		if(queries.superType && queries.subType.toLowerCase() == "all")
+		{
+			//subType is all and superType is all or does not exist, display all toys
+			if(queries.superType.toLowerCase() == "all" || !(queries.superType && queries.superType != ""))
+			{
+				makeList(toys);
+			}
+			//subType is all, superType exists and is not all, display all toys under supertype
+			else
+			{
+				//TODO: that^
+			}
+		}
+		//subtype exists and is not all, display all toys under subtype
+		else
+		{
+			var query = "SELECT * FROM \"Toys\" WHERE lower(\"Toys\".\"Type\") = lower('" + queries.subType + "') AND \"Toys\".\"Live\" = True";
+			
+			console.log(query);
+			
+			results = [];
+			var pquery = client.query(query);
+			//fired after last row is emitted
+
+			pquery.on('row', function(row) 
+			{
+				results.push(row);
+			});
+			
+			pquery.on('end', function(){
+				//console.log(results);
+				makeList(results);
+			});
+		}
+	}
+	//no name, no subtype, superType exists
+	else if (queries.superType && queries.superType != "")
+	{
+		//supertype is all, display all toys
+		if(queries.superType.toLowerCase() == "all")
+		{
+			makeList(toys);
+		}
+		//supertype exists and is not all, display all subtypes under supertype
+		else
+		{
+			for(var i = 0; i < toytypes.length; i++)
+			{
+				if(toytypes[i].Name.toLowerCase() == queries.superType.toLowerCase())
+				{
+					var data = [];
+					for(var j = 0; j < toytypes[i].SubTypes.length; j++)
+					{
+						var type = {};
+						type.name = toytypes[i].SubTypes[j];
+						type.picture = "";
+						type.year = "";
+						type.description = "";
+						type.href = "./browse?category=toys&superType=" + toytypes[i].Name + "&subType=" + toytypes[i].SubTypes[j];
+						data.push(type);
+					}
+					var type = {};
+					type.name = "All";
+					type.picture = "";
+					type.year = "";
+					type.description = "";
+					type.href = "./browse?category=toys&superType=" + toytypes[i].Name + "&subType=all";
+					data.push(type);
+					res.json(data);
+					break;
+				}
+			}
+		}
+	}
+	//no name, no subtype, no supertype, display all supertypes
+	else
+	{
+		data = [];
+		for(var i = 0; i < toytypes.length; i++)
+		{
+			var type = {};
+			type.name = toytypes[i].Name;
+			type.picture = "";
+			type.year = "";
+			type.description = "";
+			type.href = "./browse?category=toys&superType=" + toytypes[i].Name;
+			data.push(type);
+		}
+		var type = {};
+		type.name = "All";
+		type.picture = "";
+		type.year = "";
+		type.description = "";
+		type.href = "./browse?category=toys&superType=all";
+		data.push(type);
+		res.json(data);
+	}
+	
+	
+	function makeList(toys)
+	{
+		var data = [];
+		for(var i = 0; i < toys.length; i++)
+		{
+			if(toys[i].Live)
+			{
+				var toy = {};
+				toy.name = toys[i].Name;
+				toy.href = "./display/toys?name=" + toys[i].Name;
+				if(toys[i].Picture)
+				{
+					toy.picture = toys[i].Picture;
+				}
+				else
+				{
+					toy.picture = "";
+				}
+				if(toys[i].Year)
+				{
+					toy.year = toys[i].Year;
+				}
+				else
+				{
+					toy.year += "";
+				}
+				if(toys[i].Description)
+				{
+					if(toys[i].Description.length > 252)
+					{
+						toy.description = toys[i].Description.substr(0, 250) + "...";
+					}
+					else
+					{
+						toy.description = toys[i].Description;
+					}
+				}
+				else
+				{
+					toy.description = "";
+				}
+				data.push(toy)
+			}
+		}
+		res.json(data);
+	}
+});
+
 app.get('/searchtoys', function(req, res){
 	
 	
@@ -773,8 +960,6 @@ app.get('/searchtoys', function(req, res){
 	// }
 	
 	query += "true";
-	
-	console.log(query);
 	
 	results = [];
 	var pquery = client.query(query);
@@ -920,6 +1105,82 @@ app.get('/toy', function(req, res){
 //{
 app.get('/companies', function(req, res){
 	res.json(companies);
+});
+
+//get all live company rows for browse page
+app.get('/browsecompanies', function(req, res){
+	var queries = JSON.parse(req.query.data);
+	if(queries.name && queries.name != "")
+	{
+		var query = "SELECT * FROM \"Companies\" WHERE \"Companies\".\"Name\" ~* '.*" + queries.name + ".*' AND \"Companies\".\"Live\" = True";
+		
+		results = [];
+		var pquery = client.query(query);
+		//fired after last row is emitted
+
+		pquery.on('row', function(row) 
+		{
+			results.push(row);
+		});
+		
+		pquery.on('end', function(){
+			//console.log(results);
+			makeList(results);
+		});
+	}
+	else
+	{
+		makeList(companies);
+	}
+	
+	function makeList(companies)
+	{
+		var data = [];
+		for(var i = 0; i < companies.length; i++)
+		{
+			if(companies[i].Live)
+			{
+				var company = {};
+				company.name = companies[i].Name;
+				company.href = "./display/companies?name=" + companies[i].Name;
+				if(companies[i].Logo)
+				{
+					company.picture = companies[i].Logo;
+				}
+				else
+				{
+					company.picture = "";
+				}
+				var year = companies[i].FoundingYear;
+				if(companies[i].ClosingYear)
+				{
+					year += " - " + companies[i].ClosingYear;
+				}
+				else
+				{
+					year += " - Present";
+				}
+				company.year = year;
+				if(companies[i].Description)
+				{
+					if(companies[i].Description.length > 252)
+					{
+						company.description = companies[i].Description.substr(0, 250) + "...";
+					}
+					else
+					{
+						company.description = companies[i].Description;
+					}
+				}
+				else
+				{
+					company.description = "";
+				}
+				data.push(company)
+			}
+		}
+		res.json(data);
+	}
 });
 
 app.get('/searchcompanies', function(req, res){
