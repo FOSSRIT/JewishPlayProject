@@ -93,6 +93,9 @@ table {
 
 tr:nth-child(even){background-color: #e7f6ff}
 
+table tbody td:hover{ background: #F8E845; }
+table tbody tr:hover{ background: #F8E845; }
+
 .table-headers {
     background-color: #228dff;
     color: #e7f6ff;
