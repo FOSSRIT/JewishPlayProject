@@ -14,40 +14,6 @@ body img {
 	padding-left: 10px;
 }
 
-ul.topnav {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
-	background-color: #228dff;
-	margin-left: 15%;
-	width: 70%;
-}
-
-ul.topnav li {float: left;}
-
-ul.topnav li a {
-	margin: 0;
-	display: block;
-	color: #e7f6ff;
-	text-align: center;
-	padding: 14px 30px;
-	text-decoration: none;
-	font-size: 18px;
-}
-
-ul.topnav li a:hover:not(.active) {
-	background-color: #97cbdc;
-	background-color: clear;
-}
-
-ul.topnav li.right {float: right;}
-
-@media screen and (max-width: 600px){
-	ul.topnav li.right,
-	ul.topnav li {float: none;}
-}
-
 #mainContainer {
 	display: inline;
 	margin-top: 10px;
@@ -74,40 +40,24 @@ h2 {
 	font-size: 20px;
 }
 
+h3 {
+	margin: 20px;
+	font-size: 18px;
+}
+
+h4 {
+	margin: 15px;
+	font-size: 15px;
+}
+
 #mainContainer img {
 	width: auto;
     height: auto;
     display: block;
 }
 
-td {
-    height: 150px;  
-}
-
-td:nth-child(1) { width: 150px;}
-td:nth-child(2) { width: 150px;}
-td:nth-child(3) { width: 150px;}
-
-p {
+p, ul {
 	margin: 20px 30px;
 	font-size: 15px;
-}
-
-table {
-    margin-left: 5%;
-    text-align: center;
-    width: 90%;
-    margin-bottom: 20px;
-}
-
-tr:nth-child(even){background-color: #e7f6ff}
-
-table tbody td:hover{ background: #F8E845; }
-table tbody tr:hover{ background: #F8E845; }
-
-.table-headers {
-    background-color: #228dff;
-    color: #e7f6ff;
-    height: 10px;
 }
   

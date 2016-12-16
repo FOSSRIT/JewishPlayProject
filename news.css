@@ -1,6 +1,6 @@
 /*============================
 // Jewish Play Project
-// submitEntry.html Style Sheet
+// news.html Style Sheet
 ============================*/
 
 body{
@@ -12,40 +12,6 @@ body{
 body img {
 	zoom: 70%;
 	padding-left: 10px;
-}
-
-ul.topnav {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
-	background-color: #228dff;
-	margin-left: 15%;
-	width: 70%;
-}
-
-ul.topnav li {float: left;}
-
-ul.topnav li a {
-	margin: 0;
-	display: block;
-	color: #e7f6ff;
-	text-align: center;
-	padding: 14px 30px;
-	text-decoration: none;
-	font-size: 18px;
-}
-
-ul.topnav li a:hover:not(.active) {
-	background-color: #97cbdc;
-	background-color: clear;
-}
-
-ul.topnav li.right {float: right;}
-
-@media screen and (max-width: 600px){
-	ul.topnav li.right,
-	ul.topnav li {float: none;}
 }
 
 #mainContainer {
