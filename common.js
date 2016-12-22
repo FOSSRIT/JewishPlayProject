@@ -1,6 +1,6 @@
 function parseTextInput(text)
 {
-	return text == "" ? null : text;
+	return text == "" ? null : text.replace(/"/g, '\\"');
 }
 
 function parseArrayInput(list)
