@@ -285,6 +285,20 @@ function updateJSON()
 			});
 
 			tquery.on('end', function() {
+				people.sort(function(a, b)
+				{
+					return (a.LastName + a.FirstName).localeCompare(b.LastName + b.FirstName);
+				});
+				toys.sort(function(a, b)
+				{
+					return a.Name.localeCompare(b.Name);
+				});
+				companies.sort(function(a, b)
+				{
+					return a.Name.localeCompare(b.Name);
+				});
+				
+				
 				for(var i = 0; i < json.events.length; i++)
 				{
 					var event = json.events[i];
@@ -842,6 +856,13 @@ app.get('/browsetoys', function(req, res){
 				if(toytypes[i].Name.toLowerCase() == queries.superType.toLowerCase())
 				{
 					var data = [];
+					var type = {};
+					type.name = "All";
+					type.picture = "";
+					type.year = "";
+					type.description = "";
+					type.href = "./browse?category=toys&superType=" + toytypes[i].Name + "&subType=all";
+					data.push(type);
 					for(var j = 0; j < toytypes[i].SubTypes.length; j++)
 					{
 						var type = {};
@@ -852,13 +873,6 @@ app.get('/browsetoys', function(req, res){
 						type.href = "./browse?category=toys&superType=" + toytypes[i].Name + "&subType=" + toytypes[i].SubTypes[j];
 						data.push(type);
 					}
-					var type = {};
-					type.name = "All";
-					type.picture = "";
-					type.year = "";
-					type.description = "";
-					type.href = "./browse?category=toys&superType=" + toytypes[i].Name + "&subType=all";
-					data.push(type);
 					res.json(data);
 					break;
 				}
@@ -869,6 +883,13 @@ app.get('/browsetoys', function(req, res){
 	else
 	{
 		data = [];
+		var type = {};
+		type.name = "All";
+		type.picture = "";
+		type.year = "";
+		type.description = "";
+		type.href = "./browse?category=toys&superType=all";
+		data.push(type);
 		for(var i = 0; i < toytypes.length; i++)
 		{
 			var type = {};
@@ -879,13 +900,6 @@ app.get('/browsetoys', function(req, res){
 			type.href = "./browse?category=toys&superType=" + toytypes[i].Name;
 			data.push(type);
 		}
-		var type = {};
-		type.name = "All";
-		type.picture = "";
-		type.year = "";
-		type.description = "";
-		type.href = "./browse?category=toys&superType=all";
-		data.push(type);
 		res.json(data);
 	}
 	
