@@ -250,19 +250,3 @@ function setupToyTypesDropdown(toyTypes)
     
     document.getElementById("typesDropdown").innerHTML = dropdown;
 }
-
-function parseTextInput(text)
-{
-	return text == "" ? null : text;
-}
-
-function parseArrayInput(list)
-{
-    var values = [];
-    for (var i = 0; i < list.length; i++)
-    {
-        values.push(parseTextInput(list[i].value));
-    }
-    var string = "{\"" + values.toString() + "\"}";
-    return string;
-}
