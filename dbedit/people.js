@@ -670,35 +670,3 @@ function setupEvents()
     };
 	
 }
-
-function parseTextInput(text)
-{
-	return text == "" ? null : text;
-}
-
-function parseArrayInput(list)
-{
-    var values = [];
-    for (var i = 0; i < list.length; i++)
-    {
-        values.push(parseTextInput(list[i].value));
-    }
-    var string = "{\"" + values.toString() + "\"}";
-    return string;
-}
-
-function parseArrayInput2(text)
-{
-	if(text == "")
-	{
-		return null;
-	}
-	var array = text.split("|");
-	var string = "{" + array[0];
-	for(var i = 1; i < array.length; i++)
-	{
-		string += "," + array[i];
-	}
-	string += "}";
-	return string;
-}
